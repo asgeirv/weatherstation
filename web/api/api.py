@@ -9,7 +9,7 @@ def write_place(place):
     config['loc'] = place
     with open('../../weather.conf', 'w') as config_file:
         config.write(config_file)
-    os.system("python3 /home/pi/weatherstation/weather_station.py")
+    os.system('cd /home/pi/weatherstation && python3 weather_station.py')
 
 class Handler(SimpleHTTPRequestHandler):
     def do_POST(self):
