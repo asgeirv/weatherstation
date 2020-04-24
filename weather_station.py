@@ -159,13 +159,13 @@ def draw_error(err_msg):
 
 def get_host_ip():
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        s.connect(("10.255.255.255", 1)) # Unreachable. It works, so hey!
-        IP = s.getsockname()[0]
-    except:
-        IP = "Ukjent"
-    finally:
-        s.close()
+	try:
+		s.connect(("10.255.255.255", 1)) # Unreachable. It works, so hey!
+		IP = s.getsockname()[0]
+	except:
+		IP = "Ukjent"
+	finally:
+		s.close()
 
 	return IP
 
