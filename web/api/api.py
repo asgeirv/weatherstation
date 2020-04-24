@@ -1,6 +1,7 @@
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 import configparser
+import os
 
 def write_place(place):
     place['country'] = 'Norge'
@@ -8,6 +9,7 @@ def write_place(place):
     config['loc'] = place
     with open('../../weather.conf', 'w') as config_file:
         config.write(config_file)
+    os.system("python3 /home/pi/weatherstation/weather_station.py")
 
 class Handler(SimpleHTTPRequestHandler):
     def do_POST(self):
@@ -35,4 +37,3 @@ class Handler(SimpleHTTPRequestHandler):
 server_address = ('', 8000)
 httpd = HTTPServer(server_address, Handler)
 httpd.serve_forever()
-
