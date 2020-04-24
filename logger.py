@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 def log(msg):
     with open("log.txt", "a") as log_file:
