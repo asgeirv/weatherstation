@@ -22,7 +22,7 @@ def print_weather():
 		draw_weather(data)
 
 	except:
-		draw_error("Sjekk last_error.txt | IP: " + get_host_ip())
+		draw_error("Sjekk last_error.txt\nIP: " + get_host_ip())
 
 def draw_weather(data):
 	# Get current weather
@@ -137,7 +137,7 @@ def draw_weather(data):
 	epd.sleep()
 
 def draw_error(err_msg):
-	with open("last_error.txt", "w") as err_file:
+	with open("last_error.txt", "a") as err_file:
 		err_file.write('traceback.format_exc():\n' + traceback.format_exc())
 
 	epd = epd4in2.EPD()
