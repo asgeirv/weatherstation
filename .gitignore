@@ -133,3 +133,6 @@ weather.xml
 
 # Config file
 weather.conf
+
+#IDE
+.idea
