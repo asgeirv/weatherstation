@@ -162,6 +162,6 @@ def get_host_ip():
 		host_name = socket.gethostname()
 		return socket.gethostbyname(host_name)
 	except:
-		return "Ukjent")
+		return "Ukjent"
 
 print_weather()
