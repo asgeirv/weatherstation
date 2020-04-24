@@ -8,21 +8,21 @@ import configparser
 import urllib.parse as urlparser
 
 def read_config():
-	config_parser = configparser.RawConfigParser()
-	config_file_path = r'yr.conf'
+	config_parser = configparser.ConfigParser()
+	config_parser.readfp(open(r'yr.conf'))
 
-	country = config_parser.read("loc", "country")
-	region = config_parser.read("loc", "region")
-	municipality = config_parser.read("loc", "municipality")
-	location = config_parser.read("loc", "location")
+	country = config_parser.get("loc", "country")
+	region = config_parser.get("loc", "region")
+	municipality = config_parser.get("loc", "municipality")
+	location = config_parser.get("loc", "location")
 
 	return (country, region, municipality, location)
 
 def get_weather_data():
 	print("Getting weather data from yr.no...")
 	(country, region, municipality, location) = read_config()
-	url = urlparser.quote("http://www.yr.no/sted/%s/%s/%s/%s/varsel.xml" % (country, region, municipality, location))
-	data = requests.get(url)
+	url = urlparser.quote("www.yr.no/sted/%s/%s/%s/%s/varsel.xml" % (country, region, municipality, location))
+	data = requests.get("http://" + url)
 	return data.content.decode("utf-8")
 
 def write_weather_data(weather_data):
