@@ -139,7 +139,7 @@ def draw_weather(data):
 	epd.sleep()
 
 def draw_error(err_msg):
-	logger.log('traceback.format_exc():\n' + traceback.format_exc())
+	logger.log("traceback.format_exc():\n" + traceback.format_exc())
 
 	epd = epd4in2.EPD()
 	epd.init()
