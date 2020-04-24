@@ -158,10 +158,15 @@ def draw_error(err_msg):
 	exit()
 
 def get_host_ip():
-	try:
-		host_name = socket.gethostname()
-		return socket.gethostbyname(host_name)
-	except:
-		return "Ukjent"
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(("10.255.255.255", 1)) # Unreachable. It works, so hey!
+        IP = s.getsockname()[0]
+    except:
+        IP = "Ukjent"
+    finally:
+        s.close()
+
+	return IP
 
 print_weather()
