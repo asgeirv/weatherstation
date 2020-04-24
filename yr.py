@@ -9,7 +9,7 @@ import urllib.parse as urlparser
 
 def read_config():
 	config_parser = configparser.ConfigParser()
-	config_parser.readfp(open(r'yr.conf'))
+	config_parser.readfp(open(r'weather.conf'))
 
 	country = config_parser.get("loc", "country")
 	region = config_parser.get("loc", "region")
