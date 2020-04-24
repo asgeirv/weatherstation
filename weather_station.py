@@ -8,7 +8,7 @@ from datetime import datetime
 import traceback
 import epd4in2
 import yr
-import socket 
+import socket
 
 font_smallest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 12)
 font_small = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 16)
@@ -159,9 +159,9 @@ def draw_error(err_msg):
 
 def get_host_ip():
 	try:
-        host_name = socket.gethostname()
-        return socket.gethostbyname(host_name)
-    except:
-        return "Ukjent")
+		host_name = socket.gethostname()
+		return socket.gethostbyname(host_name)
+	except:
+		return "Ukjent")
 
 print_weather()
