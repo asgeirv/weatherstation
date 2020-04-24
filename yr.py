@@ -21,7 +21,7 @@ def read_config():
 def get_weather_data():
 	print("Getting weather data from yr.no...")
 	(country, region, municipality, location) = read_config()
-	url = urlparser.parse.quote("http://www.yr.no/sted/%s/%s/%s/%s/varsel.xml" % country, region, municipality, location)
+	url = urlparser.quote("http://www.yr.no/sted/%s/%s/%s/%s/varsel.xml" % country, region, municipality, location)
 	data = requests.get(url)
 	return data.content.decode("utf-8")
 
