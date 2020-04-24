@@ -6,6 +6,7 @@ from datetime import datetime, time
 import xml.etree.ElementTree as ET
 import configparser
 import urllib.parse as urlparser
+import logger
 
 def read_config():
 	config_parser = configparser.ConfigParser()
@@ -22,11 +23,13 @@ def get_weather_data():
 	print("Getting weather data from yr.no...")
 	(country, region, municipality, location) = read_config()
 	url = urlparser.quote("www.yr.no/sted/%s/%s/%s/%s/varsel.xml" % (country, region, municipality, location))
+	logger.log("Getting weather data from " + url)
 	data = requests.get("http://" + url)
 	return data.content.decode("utf-8")
 
 def write_weather_data(weather_data):
 	print("Caching weather data...")
+	logger.log("Caching weather data")
 	with codecs.open("weather.xml", encoding="utf-8", mode="w") as weather_xml:
 		weather_xml.write(weather_data)
 	weather_xml.closed

@@ -8,6 +8,7 @@ from datetime import datetime
 import traceback
 import epd4in2
 import yr
+import logger
 import socket
 
 font_smallest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 12)
@@ -22,7 +23,7 @@ def print_weather():
 		draw_weather(data)
 
 	except:
-		draw_error("Sjekk last_error.txt\nIP: " + get_host_ip())
+		draw_error("Sjekk log.txt\nIP: " + get_host_ip())
 
 def draw_weather(data):
 	# Get current weather
@@ -76,6 +77,7 @@ def draw_weather(data):
 	epd.Clear(0xFF)
 
 	print("Drawing weather report...")
+	logger.log("Drawing weather report")
 
 	#Initialize image
 	image = Image.new("1", (epd4in2.EPD_WIDTH, epd4in2.EPD_HEIGHT), 255)
@@ -137,8 +139,7 @@ def draw_weather(data):
 	epd.sleep()
 
 def draw_error(err_msg):
-	with open("last_error.txt", "a") as err_file:
-		err_file.write('traceback.format_exc():\n' + traceback.format_exc())
+	logger.log('traceback.format_exc():\n' + traceback.format_exc())
 
 	epd = epd4in2.EPD()
 	epd.init()
