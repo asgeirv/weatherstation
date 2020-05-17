@@ -99,7 +99,7 @@ def draw_weather(weather_data):
 	draw.text((15, 95), icon_name_now, font = font_big, fill = 0)
 
 	# Location
-	draw.text((390, 10), "%s" % (location), font = font_small, fill = 0, align="right")
+	draw.text((250, 10), "%s" % (location), font = font_small, fill = 0)
 	# Wind
 	draw.text((300, 30), "%s" % (wind_name_now), font = font_small, fill = 0)
 	draw.text((300, 50), "%s" % (wind_speed_now), font = font_small, fill = 0)
