@@ -49,7 +49,7 @@ class Handler(SimpleHTTPRequestHandler):
         except KeyError as e:
             field = str(e)[1:-1]
             response = {
-                'message': f'Vennligst fyll inn {field}',
+                'message': 'Vennligst fyll inn %s' % field,
                 'code': 0,
                 'data': {
                     'field': field
