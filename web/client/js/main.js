@@ -1,26 +1,73 @@
-async function setLocation(region, municipality, location) {
-    const queryString = [
-        ['region', region],
-        ['kommune', municipality],
-        ['lokasjon', location]
-    ].map(param => param.join('=')).join('&')
-    return await fetch('/sted?' + queryString, {
-        method: 'POST'
-    });
-}
+(function() {
+    let errorBox;
+    let form;
 
-window.onload = () => {
-    document.getElementById('set-location-form').addEventListener('submit', async ev => {
-        ev.preventDefault();
-        const formData = new FormData(ev.currentTarget);
-        const region = formData.get('region');
-        const municipality = formData.get('municipality');
-        const location = formData.get('location');
+    function setLocation(region, municipality, location) {
+        const queryString = [
+            ['region', region],
+            ['kommune', municipality],
+            ['lokasjon', location]
+        ].map(param => param.map(encodeURIComponent).join('=')).join('&')
+        return fetch('/sted?' + queryString, {
+            method: 'POST'
+        });
+    }
 
-        try {
-            const result = await setLocation(region, municipality, location);
-        } catch {
-            console.log("Error");
+    function markErrorField(field) {
+        form.elements[field].classList.add('error');
+    }
+
+    function reportError(error) {
+        errorBox.innerHTML = error.message;
+        errorBox.classList.remove('hidden');
+        flashForm();
+        if (error.code === 0) {
+            markErrorField(error.data.field)
         }
-    });
-}
+    }
+
+    function clearError() {
+        errorBox.classList.add('hidden');
+        for (let field of form.elements) {
+            field.classList.remove('error');
+        }
+    }
+
+    function flashForm() {
+        form.classList.add('error-flash');
+        setTimeout(() => {
+            form.classList.remove('error-flash');
+        }, 200);
+    }
+
+    window.onload = () => {
+        errorBox = document.getElementById('error-box');
+        form = document.getElementById('set-location-form');
+
+        form.addEventListener('submit', async ev => {
+            ev.preventDefault();
+            const formData = new FormData(ev.currentTarget);
+            const region = formData.get('region');
+            const municipality = formData.get('kommune');
+            const location = formData.get('lokasjon');
+
+            const result = await setLocation(region, municipality, location);
+            if (!result.ok) {
+                const body = await result.text();
+                let error;
+                try {
+                    error = JSON.parse(body);
+                } catch (SyntaxError) {
+                    error = {
+                        message: body,
+                        code: -1
+                    };
+                }
+                reportError(error);
+            }
+        });
+        form.addEventListener('input', ev => {
+            clearError();
+        });
+    }
+})();
