@@ -2,14 +2,9 @@ body {
     height: 100vh;
     margin: 0;
     font-family: Lato, sans-serif;
-    display: grid;
-    grid-template:
-        '... ...    ...'
-        '... header ...' 100px
-        '... form   ...'
-        '... ...    ...'
-        / auto auto auto;
-    justify-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 
     background: linear-gradient(#b8deef, #67a7cd);
 }
@@ -17,6 +12,7 @@ body {
 h1 {
     font-size: 50px;
     margin: 20px;
+    text-align: center;
 }
 
 #teh_sun {
@@ -34,7 +30,8 @@ h1 {
 #set-location-form {
     text-align: center;
     grid-area: form;
-    width: 100%;
+    width: 90%;
+    margin-left: 5%;
 
     padding-top: 20px;
     padding-bottom: 20px;
@@ -49,7 +46,6 @@ h1 {
 #set-location-form label {
     font-size: 30px;
     font-weight: bold;
-    margin-bottom: -20px;
 }
 
 #set-location-form input {
@@ -64,6 +60,8 @@ h1 {
     border-radius: 10px;
 
     background-color: #e8f5ff;
+
+    margin-bottom: 15px;
 }
 
 #set-location-form button {
@@ -75,6 +73,9 @@ h1 {
     border: none;
     border-radius: 20px;
     background-color: #8bd3ff;
+
+    margin-top: 40px;
+    padding: 5px;
 }
 
 #set-location-form button:hover {
