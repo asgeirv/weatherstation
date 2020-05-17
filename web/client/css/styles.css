@@ -91,9 +91,14 @@ h1 {
     background-color: #ff6262;
 }
 
-#error-box {
+#info-box.error {
+    color: #af1b1b;
 }
 
-#error-box.hidden {
+#info-box.success {
+    color: #358610;
+}
+
+#info-box.hidden {
     visibility: hidden;
 }

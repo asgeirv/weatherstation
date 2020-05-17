@@ -1,5 +1,5 @@
 (function() {
-    let errorBox;
+    let infoBox;
     let form;
 
     function setLocation(region, municipality, location) {
@@ -13,35 +13,44 @@
         });
     }
 
+    function reportSuccess(success) {
+        infoBox.classList.remove('hidden');
+        infoBox.classList.remove('error');
+        infoBox.classList.add('success');
+        infoBox.innerHTML = success;
+    }
+
     function markErrorField(field) {
         form.elements[field].classList.add('error');
     }
 
     function reportError(error) {
-        errorBox.innerHTML = error.message;
-        errorBox.classList.remove('hidden');
-        flashForm();
+        infoBox.innerHTML = error.message;
+        infoBox.classList.remove('hidden');
+        infoBox.classList.remove('success');
+        infoBox.classList.add('error');
+        flashForm('error-flash');
         if (error.code === 0) {
             markErrorField(error.data.field)
         }
     }
 
-    function clearError() {
-        errorBox.classList.add('hidden');
+    function clearInfo() {
+        infoBox.classList.add('hidden');
         for (let field of form.elements) {
             field.classList.remove('error');
         }
     }
 
-    function flashForm() {
-        form.classList.add('error-flash');
+    function flashForm(className) {
+        form.classList.add(className);
         setTimeout(() => {
-            form.classList.remove('error-flash');
+            form.classList.remove(className);
         }, 200);
     }
 
     window.onload = () => {
-        errorBox = document.getElementById('error-box');
+        infoBox = document.getElementById('info-box');
         form = document.getElementById('set-location-form');
 
         form.addEventListener('submit', async ev => {
@@ -52,7 +61,9 @@
             const location = formData.get('lokasjon');
 
             const result = await setLocation(region, municipality, location);
-            if (!result.ok) {
+            if (result.ok) {
+                reportSuccess('Fant sted - oppdaterer skjerm');
+            } else {
                 const body = await result.text();
                 let error;
                 try {
@@ -67,7 +78,7 @@
             }
         });
         form.addEventListener('input', ev => {
-            clearError();
+            clearInfo();
         });
     }
 })();
