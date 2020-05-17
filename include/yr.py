@@ -46,7 +46,7 @@ def get_forecast(config = None):
 	# Get forecasts
 	forecast = root.find("forecast")
 	tabular = forecast.find("tabular")
-	(_, _, municipality, location) = config
+	(_, _, _, location) = config
 	data = []
 
 	# Find forecast for current time period
@@ -61,7 +61,7 @@ def get_forecast(config = None):
 
 	return {
 		"weather_data": data,
-		"location": "%s, %s" % (municipality, location)
+		"location": location
 	}
 
 def get_weather(start_time, period):
