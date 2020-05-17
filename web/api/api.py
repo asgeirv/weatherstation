@@ -46,15 +46,17 @@ class Handler(SimpleHTTPRequestHandler):
                 'location': params['lokasjon'][0]
             }
         except KeyError as e:
-            self.send_error(400, f'{e} must be supplied')
+            self.send_response(400)
+            self.send_header('Content-type', 'text/plain')
             self.end_headers()
+            self.wfile.write(bytes(f'Vennligst fyll inn {e}', 'utf-8'))
             return
 
         if not verify_place(place):
             self.send_response(400)
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
-            self.wfile.write(bytes('Invalid place or something idk', 'utf-8'))
+            self.wfile.write(bytes('Kunne ikke finne sted', 'utf-8'))
             return
 
         write_place(place)

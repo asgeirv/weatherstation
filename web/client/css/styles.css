@@ -36,6 +36,9 @@ h1 {
     background-color: white;
 
     display: grid;
+
+    transition-property: background-color;
+    transition-duration: 200ms;
 }
 
 #set-location-form label {
@@ -71,4 +74,15 @@ h1 {
 
 #set-location-form button:hover {
     background-color: #3e7fa1;
+}
+
+#set-location-form.error-flash {
+    background-color: #ff6262;
+}
+
+#error-box {
+}
+
+#error-box.hidden {
+    visibility: hidden;
 }
