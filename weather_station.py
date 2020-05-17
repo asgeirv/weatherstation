@@ -19,10 +19,10 @@ font_biggest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.t
 
 def print_weather():
 	try:
-		data = yr.get_forecast(yr.read_config())
+		weather_data = yr.get_forecast(yr.read_config())
 		print("Creating weather report...")
 		logger.log("Creating weather report")
-		draw_weather(data)
+		draw_weather(weather_data)
 
 	except:
 		draw_error("Sjekk /var/log/weather_log.txt\nIP: " + get_host_ip())
@@ -46,7 +46,7 @@ def draw_weather(weather_data):
 	pressure_unit_now = weather_now["pressure"]["unit"]
 
 	# Get location
-	location = weather_now["location"]
+	location = weather_data["location"]
 
 	# Get future weather 1
 	weather1 = weather_data["weather_data"][1]
