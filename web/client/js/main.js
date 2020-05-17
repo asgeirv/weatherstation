@@ -13,14 +13,24 @@
         });
     }
 
+    function markErrorField(field) {
+        form.elements[field].classList.add('error');
+    }
+
     function reportError(error) {
-        errorBox.innerHTML = error;
+        errorBox.innerHTML = error.message;
         errorBox.classList.remove('hidden');
         flashForm();
+        if (error.code === 0) {
+            markErrorField(error.data.field)
+        }
     }
 
     function clearError() {
         errorBox.classList.add('hidden');
+        for (let field of form.elements) {
+            field.classList.remove('error');
+        }
     }
 
     function flashForm() {
@@ -38,16 +48,22 @@
             ev.preventDefault();
             const formData = new FormData(ev.currentTarget);
             const region = formData.get('region');
-            const municipality = formData.get('municipality');
-            const location = formData.get('location');
+            const municipality = formData.get('kommune');
+            const location = formData.get('lokasjon');
 
-            try {
-                const result = await setLocation(region, municipality, location);
-                if (!result.ok) {
-                    reportError(await result.text());
+            const result = await setLocation(region, municipality, location);
+            if (!result.ok) {
+                const body = await result.text();
+                let error;
+                try {
+                    error = JSON.parse(body);
+                } catch (SyntaxError) {
+                    error = {
+                        message: body,
+                        code: -1
+                    };
                 }
-            } catch {
-                console.log("Error");
+                reportError(error);
             }
         });
         form.addEventListener('input', ev => {

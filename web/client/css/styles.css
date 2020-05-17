@@ -61,6 +61,11 @@ h1 {
     background-color: #e8f5ff;
 }
 
+#set-location-form input.error {
+    border-color: red;
+    background-color: #ff7575;
+}
+
 #set-location-form button {
     justify-self: center;
     font-weight: bold;

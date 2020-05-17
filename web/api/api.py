@@ -4,6 +4,7 @@ import configparser
 import os
 import traceback
 import yr
+import json
 
 def write_place(place):
     config = configparser.ConfigParser()
@@ -46,10 +47,18 @@ class Handler(SimpleHTTPRequestHandler):
                 'location': params['lokasjon'][0]
             }
         except KeyError as e:
+            field = str(e)[1:-1]
+            response = {
+                'message': f'Vennligst fyll inn {field}',
+                'code': 0,
+                'data': {
+                    'field': field
+                }
+            }
             self.send_response(400)
             self.send_header('Content-type', 'text/plain')
             self.end_headers()
-            self.wfile.write(bytes(f'Vennligst fyll inn {e}', 'utf-8'))
+            self.wfile.write(bytes(json.dumps(response), 'utf-8'))
             return
 
         if not verify_place(place):
