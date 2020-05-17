@@ -1,10 +1,10 @@
-async function setLocation(region, municipality, location) {
+function setLocation(region, municipality, location) {
     const queryString = [
         ['region', region],
         ['kommune', municipality],
         ['lokasjon', location]
     ].map(param => param.map(encodeURIComponent).join('=')).join('&')
-    return await fetch('/sted?' + queryString, {
+    return fetch('/sted?' + queryString, {
         method: 'POST'
     });
 }

@@ -19,9 +19,11 @@ def read_config():
 
 	return (country, region, municipality, location)
 
-def get_weather_data():
+def get_weather_data(config = None):
 	print("Getting weather data from yr.no...")
-	(country, region, municipality, location) = read_config()
+	if config is None:
+	    config = read_config()
+	(country, region, municipality, location) = config
 	url = urlparser.quote("www.yr.no/sted/%s/%s/%s/%s/varsel.xml" % (country, region, municipality, location))
 	logger.log("Getting weather data from " + url)
 	data = requests.get("http://" + url)
@@ -34,13 +36,13 @@ def write_weather_data(weather_data):
 		weather_xml.write(weather_data)
 	weather_xml.closed
 
-def get_xml_root():
-	write_weather_data(get_weather_data())
+def get_xml_root(config = None):
+	write_weather_data(get_weather_data(config))
 	tree = ET.parse("weather.xml")
 	return tree.getroot()
 
-def get_forecast():
-	root = get_xml_root()
+def get_forecast(config = None):
+	root = get_xml_root(config)
 	# Get forecasts
 	forecast = root.find("forecast")
 	tabular = forecast.find("tabular")
