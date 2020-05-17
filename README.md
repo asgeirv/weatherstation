@@ -11,4 +11,4 @@ Configure cron (`crontab -e`) to run the script once every hour and on reboot:
 
 `@hourly PYTHONPATH=/home/pi/weatherstation/include:$PYTHONPATH bash -c "cd /home/pi/weatherstation && python3 weather_station.py" &`
 
-Also make sure that `var/log/.txt` exists and is writable.
+Also make sure that `var/log/weatherstation_log.txt` exists and is writable.
