@@ -2,6 +2,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse, parse_qs
 import configparser
 import os
+import traceback
 
 def write_place(place):
     place['country'] = 'Norge'
@@ -13,21 +14,32 @@ def write_place(place):
 
 class Handler(SimpleHTTPRequestHandler):
     def do_POST(self):
-        parsed_url = urlparse(self.path)
-        if parsed_url.path == '/sted':
-            self.handle_get_place(parsed_url)
-        else:
-            self.send_response(404)
+        try:
+            parsed_url = urlparse(self.path)
+            if parsed_url.path == '/sted':
+                self.handle_get_place(parsed_url)
+            else:
+                self.send_response(404, 'Route not found')
+                self.end_headers()
+                return
+        except:
+            self.send_error(500, 'Internal server error')
             self.end_headers()
-            return
+            traceback.print_exc()
 
     def handle_get_place(self, parsed_url):
         params = parse_qs(parsed_url.query)
-        place = {
-            'region': params['region'][0],
-            'municipality': params['kommune'][0],
-            'location': params['lokasjon'][0]
-        }
+
+        try:
+            place = {
+                'region': padrams['region'][0],
+                'municipality': params['kommune'][0],
+                'location': params['lokasjon'][0]
+            }
+        except KeyError as e:
+            self.send_error(400, f'{e} must be supplied')
+            self.end_headers()
+            return
 
         write_place(place)
 
