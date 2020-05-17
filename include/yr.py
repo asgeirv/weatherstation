@@ -46,7 +46,9 @@ def get_forecast(config = None):
 	# Get forecasts
 	forecast = root.find("forecast")
 	tabular = forecast.find("tabular")
+	(_, _, municipality, location) = config
 	data = []
+	data.append({"location": "%s, %s" % municipality, location})
 
 	# Find forecast for current time period
 	for period in tabular.findall("time"):

@@ -19,7 +19,7 @@ font_biggest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.t
 
 def print_weather():
 	try:
-		data = yr.get_forecast()
+		data = yr.get_forecast(yr.read_config())
 		draw_weather(data)
 
 	except:
@@ -41,6 +41,9 @@ def draw_weather(data):
 
 	pressure_val_now = weather_now["pressure"]["val"]
 	pressure_unit_now = weather_now["pressure"]["unit"]
+
+	# Get location
+	location = weather_now["location"]
 
 	# Get future weather 1
 	weather1 = data[1]
@@ -92,12 +95,15 @@ def draw_weather(data):
 	draw.text((130, 15), u"%s° %s" % (temperature_val_now, temperature_unit_now), font = font_biggest, fill = 0)
 	# Cloudiness text
 	draw.text((15, 95), icon_name_now, font = font_big, fill = 0)
+
+	# Location
+	draw.text((300, 10), "%s" % (location), font = font_small, fill = 0)
 	# Wind
-	draw.text((300, 10), "%s" % (wind_name_now), font = font_small, fill = 0)
-	draw.text((300, 30), "%s" % (wind_speed_now), font = font_small, fill = 0)
-	draw.text((300, 50), "%s" % (wind_direction_now), font = font_small, fill = 0)
+	draw.text((300, 30), "%s" % (wind_name_now), font = font_small, fill = 0)
+	draw.text((300, 50), "%s" % (wind_speed_now), font = font_small, fill = 0)
+	draw.text((300, 70), "%s" % (wind_direction_now), font = font_small, fill = 0)
 	# Pressure
-	draw.text((300, 70), "%s %s" % (pressure_val_now, pressure_unit_now), font = font_small, fill = 0)
+	draw.text((300, 90), "%s %s" % (pressure_val_now, pressure_unit_now), font = font_small, fill = 0)
 
 	# Draw separator
 	draw.line((10, 150, 390, 150), fill = 0)
