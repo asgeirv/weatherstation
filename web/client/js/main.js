@@ -3,7 +3,7 @@ async function setLocation(region, municipality, location) {
         ['region', region],
         ['kommune', municipality],
         ['lokasjon', location]
-    ].map(param => param.join('=')).join('&')
+    ].map(param => param.map(encodeURIComponent).join('=')).join('&')
     return await fetch('/sted?' + queryString, {
         method: 'POST'
     });
