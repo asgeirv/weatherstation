@@ -20,6 +20,8 @@ font_biggest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.t
 def print_weather():
 	try:
 		data = yr.get_forecast(yr.read_config())
+		print("Creating weather report...")
+		logger.log("Creating weather report")
 		draw_weather(data)
 
 	except:
@@ -27,6 +29,7 @@ def print_weather():
 
 def draw_weather(data):
 	# Get current weather
+	logger.log("Reading weather data...")
 	weather_now = data[0]
 
 	icon_now = weather_now["icon"]["var"]
@@ -75,14 +78,13 @@ def draw_weather(data):
 	credits = yr.get_credits()
 
 	# Initialize E-Ink screen
+	logger.log("Initializing E-ink screen...")
 	epd = epd4in2.EPD()
 	epd.init()
 	epd.Clear(0xFF)
 
-	print("Drawing weather report...")
-	logger.log("Drawing weather report")
-
 	#Initialize image
+	logger.log("Initializing weather report...")
 	image = Image.new("1", (epd4in2.EPD_WIDTH, epd4in2.EPD_HEIGHT), 255)
 
 	draw = ImageDraw.Draw(image)
@@ -140,6 +142,8 @@ def draw_weather(data):
 	draw.text((15, 280), "Sist oppdatert %s | IP: %s" % (datetime.now(), get_host_ip()), font = font_smallest, fill = 0)
 
 	# Draw weather report
+	print("Drawing weather report...")
+	logger.log("Drawing weather report")
 	epd.display(epd.getbuffer(image))
 	time.sleep(2)
 	epd.sleep()
