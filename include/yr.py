@@ -48,7 +48,6 @@ def get_forecast(config = None):
 	tabular = forecast.find("tabular")
 	(_, _, municipality, location) = config
 	data = []
-	data.append({"location": "%s, %s" % municipality, location})
 
 	# Find forecast for current time period
 	for period in tabular.findall("time"):
@@ -60,7 +59,10 @@ def get_forecast(config = None):
 		if end_time > datetime.now():
 			data.append(get_weather(start_time, period))
 
-	return data
+	return {
+		"weather_data": data,
+		"location": "%s, %s" % (municipality, location)
+	}
 
 def get_weather(start_time, period):
 	# Get weather icon

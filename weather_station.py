@@ -27,10 +27,10 @@ def print_weather():
 	except:
 		draw_error("Sjekk /var/log/weather_log.txt\nIP: " + get_host_ip())
 
-def draw_weather(data):
+def draw_weather(weather_data):
 	# Get current weather
 	logger.log("Reading weather data...")
-	weather_now = data[0]
+	weather_now = weather_data["weather_data"][0]
 
 	icon_now = weather_now["icon"]["var"]
 	icon_name_now = weather_now["icon"]["text"]
@@ -49,7 +49,7 @@ def draw_weather(data):
 	location = weather_now["location"]
 
 	# Get future weather 1
-	weather1 = data[1]
+	weather1 = weather_data["weather_data"][1]
 
 	time_1 = weather1["time"]
 
@@ -62,7 +62,7 @@ def draw_weather(data):
 	wind_speed_1 = weather1["wind_speed"]["speed"]
 
 	# Get future weather 2
-	weather2 = data[2]
+	weather2 = weather_data["weather_data"][2]
 
 	time_2 = weather2["time"]
 
