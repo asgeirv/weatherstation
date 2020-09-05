@@ -17,167 +17,172 @@ font_med = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf",
 font_big = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 32)
 font_biggest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 48)
 
-def print_weather():
-	try:
-		weather_data = yr.get_forecast(yr.read_config())
-		print("Creating weather report...")
-		logger.log("Creating weather report")
-		draw_weather(weather_data)
 
-	except:
-		draw_error("Sjekk /var/log/weather_log.txt\nIP: " + get_host_ip())
+def print_weather():
+    try:
+        weather_data = yr.get_forecast(yr.read_config())
+        print("Creating weather report...")
+        logger.log("Creating weather report")
+        draw_weather(weather_data)
+
+    except:
+        draw_error("Sjekk /var/log/weather_log.txt\nIP: " + get_host_ip())
+
 
 def draw_weather(weather_data):
-	# Get current weather
-	logger.log("Reading weather data...")
-	weather_now = weather_data["weather_data"][0]
+    # Get current weather
+    logger.log("Reading weather data...")
+    weather_now = weather_data["weather_data"][0]
 
-	icon_now = weather_now["icon"]["var"]
-	icon_name_now = weather_now["icon"]["text"]
+    icon_now = weather_now["icon"]["var"]
+    icon_name_now = weather_now["icon"]["text"]
 
-	temperature_val_now = weather_now["temperature"]["val"]
-	temperature_unit_now = weather_now["temperature"]["unit"]
+    temperature_val_now = weather_now["temperature"]["val"]
+    temperature_unit_now = weather_now["temperature"]["unit"]
 
-	wind_speed_now = weather_now["wind_speed"]["speed"]
-	wind_name_now = weather_now["wind_speed"]["name"]
-	wind_direction_now = weather_now["wind_direction"]["direction"]
+    wind_speed_now = weather_now["wind_speed"]["speed"]
+    wind_name_now = weather_now["wind_speed"]["name"]
+    wind_direction_now = weather_now["wind_direction"]["direction"]
 
-	pressure_val_now = weather_now["pressure"]["val"]
-	pressure_unit_now = weather_now["pressure"]["unit"]
+    pressure_val_now = weather_now["pressure"]["val"]
+    pressure_unit_now = weather_now["pressure"]["unit"]
 
-	# Get location
-	location = weather_data["location"]
+    # Get location
+    location = weather_data["location"]
 
-	# Get future weather 1
-	weather1 = weather_data["weather_data"][1]
+    # Get future weather 1
+    weather1 = weather_data["weather_data"][1]
 
-	time_1 = weather1["time"]
+    time_1 = weather1["time"]
 
-	icon_1 = weather1["icon"]["var"]
-	icon_name_1 = weather1["icon"]["text"]
+    icon_1 = weather1["icon"]["var"]
+    icon_name_1 = weather1["icon"]["text"]
 
-	temperature_val_1 = weather1["temperature"]["val"]
-	temperature_unit_1 = weather1["temperature"]["unit"]
+    temperature_val_1 = weather1["temperature"]["val"]
+    temperature_unit_1 = weather1["temperature"]["unit"]
 
-	wind_speed_1 = weather1["wind_speed"]["speed"]
+    wind_speed_1 = weather1["wind_speed"]["speed"]
 
-	# Get future weather 2
-	weather2 = weather_data["weather_data"][2]
+    # Get future weather 2
+    weather2 = weather_data["weather_data"][2]
 
-	time_2 = weather2["time"]
+    time_2 = weather2["time"]
 
-	icon_2 = weather2["icon"]["var"]
-	icon_name_2 = weather2["icon"]["text"]
+    icon_2 = weather2["icon"]["var"]
+    icon_name_2 = weather2["icon"]["text"]
 
-	temperature_val_2 = weather2["temperature"]["val"]
-	temperature_unit_2 = weather2["temperature"]["unit"]
+    temperature_val_2 = weather2["temperature"]["val"]
+    temperature_unit_2 = weather2["temperature"]["unit"]
 
-	wind_speed_2 = weather2["wind_speed"]["speed"]
+    wind_speed_2 = weather2["wind_speed"]["speed"]
 
-	# Get credits
-	credits = yr.get_credits()
+    # Get credits
+    credits = yr.get_credits()
 
-	# Initialize E-Ink screen
-	logger.log("Initializing E-ink screen...")
-	epd = epd4in2.EPD()
-	epd.init()
-	epd.Clear(0xFF)
+    # Initialize E-Ink screen
+    logger.log("Initializing E-ink screen...")
+    epd = epd4in2.EPD()
+    epd.init()
+    epd.Clear(0xFF)
 
-	#Initialize image
-	logger.log("Initializing weather report...")
-	image = Image.new("1", (epd4in2.EPD_WIDTH, epd4in2.EPD_HEIGHT), 255)
+    # Initialize image
+    logger.log("Initializing weather report...")
+    image = Image.new("1", (epd4in2.EPD_WIDTH, epd4in2.EPD_HEIGHT), 255)
 
-	draw = ImageDraw.Draw(image)
+    draw = ImageDraw.Draw(image)
 
-	# Draw current weather
-	# Weather icon
-	icon = Image.open("icons/%s.bmp" % (icon_now))
-	image.paste(icon, (5, 5))
-	# Temperature
-	draw.text((130, 15), u"%s° %s" % (temperature_val_now, temperature_unit_now), font = font_biggest, fill = 0)
-	# Cloudiness text
-	draw.text((15, 95), icon_name_now, font = font_big, fill = 0)
+    # Draw current weather
+    # Weather icon
+    icon = Image.open("icons/%s.bmp" % (icon_now))
+    image.paste(icon, (5, 5))
+    # Temperature
+    draw.text((130, 15), u"%s° %s" % (temperature_val_now, temperature_unit_now), font=font_biggest, fill=0)
+    # Cloudiness text
+    draw.text((15, 95), icon_name_now, font=font_big, fill=0)
 
-	# Location
-	draw.text((290, 10), "%s" % (location), font = font_small, fill = 0)
-	# Wind
-	draw.text((300, 30), "%s" % (wind_name_now), font = font_small, fill = 0)
-	draw.text((300, 50), "%s" % (wind_speed_now), font = font_small, fill = 0)
-	draw.text((300, 70), "%s" % (wind_direction_now), font = font_small, fill = 0)
-	# Pressure
-	draw.text((300, 90), "%s %s" % (pressure_val_now, pressure_unit_now), font = font_small, fill = 0)
+    # Location
+    draw.text((290, 10), "%s" % (location), font=font_small, fill=0)
+    # Wind
+    draw.text((300, 30), "%s" % (wind_name_now), font=font_small, fill=0)
+    draw.text((300, 50), "%s" % (wind_speed_now), font=font_small, fill=0)
+    draw.text((300, 70), "%s" % (wind_direction_now), font=font_small, fill=0)
+    # Pressure
+    draw.text((300, 90), "%s %s" % (pressure_val_now, pressure_unit_now), font=font_small, fill=0)
 
-	# Draw separator
-	draw.line((10, 150, 390, 150), fill = 0)
+    # Draw separator
+    draw.line((10, 150, 390, 150), fill=0)
 
-	# Draw future weather 1
-	# Time
-	draw.text((20, 160), time_1, font = font_small, fill = 0)
-	# Weather icon
-	icon1 = Image.open("icons/small/%s.bmp" % (icon_1))
-	image.paste(icon1, (20, 180))
-	# Temperature
-	draw.text((80, 175), u"%s° %s" % (temperature_val_1, temperature_unit_1), font = font_med, fill = 0)
-	# Wind
-	draw.text((80, 200), "%s" % (wind_speed_1), font = font_small, fill = 0)
+    # Draw future weather 1
+    # Time
+    draw.text((20, 160), time_1, font=font_small, fill=0)
+    # Weather icon
+    icon1 = Image.open("icons/small/%s.bmp" % (icon_1))
+    image.paste(icon1, (20, 180))
+    # Temperature
+    draw.text((80, 175), u"%s° %s" % (temperature_val_1, temperature_unit_1), font=font_med, fill=0)
+    # Wind
+    draw.text((80, 200), "%s" % (wind_speed_1), font=font_small, fill=0)
 
-	# Draw future weather 2
-	# Time
-	draw.text((200, 160), time_2, font = font_small, fill = 0)
-	# Weather icon
-	icon2 = Image.open("icons/small/%s.bmp" % (icon_2))
-	image.paste(icon2, (200, 180))
-	# Temperature
-	draw.text((260, 175), u"%s° %s" % (temperature_val_2, temperature_unit_2), font = font_med, fill = 0)
-	# Wind
-	draw.text((260, 200), "%s" % (wind_speed_2), font = font_small, fill = 0)
+    # Draw future weather 2
+    # Time
+    draw.text((200, 160), time_2, font=font_small, fill=0)
+    # Weather icon
+    icon2 = Image.open("icons/small/%s.bmp" % (icon_2))
+    image.paste(icon2, (200, 180))
+    # Temperature
+    draw.text((260, 175), u"%s° %s" % (temperature_val_2, temperature_unit_2), font=font_med, fill=0)
+    # Wind
+    draw.text((260, 200), "%s" % (wind_speed_2), font=font_small, fill=0)
 
-	# Draw separator
-	draw.line((10, 235, 390, 235), fill = 0)
+    # Draw separator
+    draw.line((10, 235, 390, 235), fill=0)
 
-	# Credits
-	draw.text((15, 240), credits[0], font = font_small, fill = 0)
-	draw.text((15, 260), credits[1], font = font_small, fill = 0)
-	# Last updated + IP
-	draw.text((15, 280), "Sist oppdatert %s | IP: %s" % (datetime.now(), get_host_ip()), font = font_smallest, fill = 0)
+    # Credits
+    draw.text((15, 240), credits[0], font=font_small, fill=0)
+    draw.text((15, 260), credits[1], font=font_small, fill=0)
+    # Last updated + IP
+    draw.text((15, 280), "Sist oppdatert %s | IP: %s" % (datetime.now(), get_host_ip()), font=font_smallest, fill=0)
 
-	# Draw weather report
-	print("Drawing weather report...")
-	logger.log("Drawing weather report")
-	epd.display(epd.getbuffer(image))
-	time.sleep(2)
-	epd.sleep()
+    # Draw weather report
+    print("Drawing weather report...")
+    logger.log("Drawing weather report")
+    epd.display(epd.getbuffer(image))
+    time.sleep(2)
+    epd.sleep()
+
 
 def draw_error(err_msg):
-	logger.log("traceback.format_exc():\n" + traceback.format_exc())
+    logger.log("traceback.format_exc():\n" + traceback.format_exc())
 
-	epd = epd4in2.EPD()
-	epd.init()
-	epd.Clear(0xFF)
+    epd = epd4in2.EPD()
+    epd.init()
+    epd.Clear(0xFF)
 
-	#Initialize image
-	image = Image.new("1", (epd4in2.EPD_WIDTH, epd4in2.EPD_HEIGHT), 255)
-	draw = ImageDraw.Draw(image)
-	draw.text((10, 100), "Noe gikk galt :(", font = font_biggest, fill = 0)
-	draw.text((10, 170), err_msg, font = font_med, fill = 0)
+    # Initialize image
+    image = Image.new("1", (epd4in2.EPD_WIDTH, epd4in2.EPD_HEIGHT), 255)
+    draw = ImageDraw.Draw(image)
+    draw.text((10, 100), "Noe gikk galt :(", font=font_biggest, fill=0)
+    draw.text((10, 170), err_msg, font=font_med, fill=0)
 
-	# Draw error message
-	epd.display(epd.getbuffer(image))
-	time.sleep(2)
-	epd.sleep()
+    # Draw error message
+    epd.display(epd.getbuffer(image))
+    time.sleep(2)
+    epd.sleep()
 
-	exit()
+    exit()
+
 
 def get_host_ip():
-	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-	try:
-		s.connect(("10.255.255.255", 1)) # Unreachable. It works, so hey!
-		IP = s.getsockname()[0]
-	except:
-		IP = "Ukjent"
-	finally:
-		s.close()
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(("10.255.255.255", 1))  # Unreachable. It works, so hey!
+        IP = s.getsockname()[0]
+    except:
+        IP = "Ukjent"
+    finally:
+        s.close()
 
-	return IP
+    return IP
+
 
 print_weather()
