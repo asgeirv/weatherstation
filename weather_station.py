@@ -93,14 +93,14 @@ def draw_weather(weather_data):
     icon1 = Image.open("icons/small/%s.bmp" % (icon_6))
     image.paste(icon1, (20, 180))
     # Temperature
-    draw.text((80, 175), u"%.0f-%.0f° C" % (temperature_val_max_6, temperature_unit_min_6), font=font_med, fill=0)
+    draw.text((80, 185), u"%.0f-%.0f° C" % (temperature_val_max_6, temperature_unit_min_6), font=font_med, fill=0)
 
     # Draw weather in 12 hours
     # Time
-    draw.text((200, 160), time_12, font=font_small, fill=0)
+    draw.text((300, 160), time_12, font=font_small, fill=0)
     # Weather icon
     icon2 = Image.open("icons/small/%s.bmp" % (icon_12))
-    image.paste(icon2, (200, 180))
+    image.paste(icon2, (300, 180))
 
     # Draw separator
     draw.line((10, 235, 390, 235), fill=0)
