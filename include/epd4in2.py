@@ -48,7 +48,7 @@
 #
 
 
-import epdconfig
+import include.epdconfig as epdconfig
 from PIL import Image
 import RPi.GPIO as GPIO
 
