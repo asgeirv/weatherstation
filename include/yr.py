@@ -71,7 +71,7 @@ def get_forecast(config=None):
 
     time_6 = to_datetime(weather["time"]) + timedelta(hours=6)
     weather_6 = {
-        "time": time_6.hour + ":00",
+        "time": str(time_6.hour) + ":00",
         "icon": weather_data_6["summary"]["symbol_code"],
         "temperature_max": weather_data_6["details"]["air_temperature_max"],
         "temperature_min": weather_data_6["details"]["air_temperature_min"]
@@ -79,7 +79,7 @@ def get_forecast(config=None):
 
     time_12 = to_datetime(weather["time"]) + timedelta(hours=12)
     weather_12 = {
-        "time": time_12.hour + ":00",
+        "time": str(time_12.hour) + ":00",
         "icon": weather_data_12["summary"]["symbol_code"]}
 
     return {
