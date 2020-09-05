@@ -129,6 +129,7 @@ dmypy.json
 
 # Yr weather data
 weather.xml
+weather.json
 
 # Config file
 weather.conf

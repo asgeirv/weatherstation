@@ -2,118 +2,111 @@
 
 import requests
 import codecs
-from datetime import datetime, time
-import xml.etree.ElementTree as ET
+from datetime import datetime, timedelta
+import json
 import configparser
-import urllib.parse as urlparser
 import logger
 
 
 def read_config():
     config_parser = configparser.ConfigParser()
-    config_parser.readfp(open(r'weather.conf'))
+    config_parser.read_file(open(r'weather.conf'))
 
-    country = config_parser.get("loc", "country")
-    region = config_parser.get("loc", "region")
-    municipality = config_parser.get("loc", "municipality")
-    location = config_parser.get("loc", "location")
+    lat = config_parser.get("loc", "lat")
+    long = config_parser.get("loc", "long")
 
-    return (country, region, municipality, location)
+    return {"lat": lat, "long": long}
 
 
 def get_weather_data(config=None):
     print("Getting weather data from yr.no...")
     if config is None:
         config = read_config()
-    (country, region, municipality, location) = config
-    url = urlparser.quote("www.yr.no/sted/%s/%s/%s/%s/varsel.xml" % (country, region, municipality, location))
+    url = ("https://api.met.no/weatherapi/locationforecast/2.0/complete.json?lat=%s&lon=%s"
+           % (config["lat"], config["long"]))
     logger.log("Getting weather data from " + url)
-    data = requests.get("http://" + url)
-    return data.content.decode("utf-8")
+
+    # Set header
+    headers = {"User-Agent": "AEV Weather Station"}
+    response = requests.get(url, headers=headers)
+    data = response.content.decode("utf-8")
+    write_weather_data(data)
+
+    return data
 
 
 def write_weather_data(weather_data):
     print("Caching weather data...")
     logger.log("Caching weather data")
-    with codecs.open("weather.xml", encoding="utf-8", mode="w") as weather_xml:
-        weather_xml.write(weather_data)
-    weather_xml.closed
-
-
-def get_xml_root(config=None):
-    write_weather_data(get_weather_data(config))
-    tree = ET.parse("weather.xml")
-    return tree.getroot()
+    with codecs.open("weather.json", encoding="utf-8", mode="w") as weather_json:
+        weather_json.write(weather_data)
+    weather_json.close()
 
 
 def get_forecast(config=None):
-    root = get_xml_root(config)
+    weather_json = get_weather_data(config)
     # Get forecasts
-    forecast = root.find("forecast")
-    tabular = forecast.find("tabular")
-    (_, _, _, location) = config
-    data = []
+    data = json.loads(weather_json)
 
-    # Find forecast for current time period
-    for period in tabular.findall("time"):
-        start_time = period.get("from")
-        end_time = period.get("to")
-        start_time = to_datetime(start_time)
-        end_time = to_datetime(end_time)
+    # Get last update
+    last_update = data["properties"]["meta"]["updated_at"]
 
-        if end_time > datetime.now():
-            data.append(get_weather(start_time, period))
+    # Get forecasts for the current time, in 1 hour, in 6 hours and in 12 hours
+    weather = data["properties"]["timeseries"][0]
+
+    weather_data_now = weather["data"]["instant"]["details"]
+    weather_data_1 = weather["data"]["next_1_hours"]
+    weather_data_6 = weather["data"]["next_6_hours"]
+    weather_data_12 = weather["data"]["next_12_hours"]
+
+    # Extract the weather information we care about
+    weather_now = {
+        "time": weather["time"],
+        "icon": weather_data_1["summary"]["symbol_code"],  # for some reason this is not included in the instant field
+        "wind_speed": weather_data_now["wind_speed"],
+        "wind_direction": get_wind_direction(weather_data_now["wind_from_direction"]),
+        "temperature": weather_data_now["air_temperature"],
+        "pressure": weather_data_now["air_pressure_at_sea_level"]
+    }
+
+    time_6 = to_datetime(weather["time"]) + timedelta(hours=6)
+    weather_6 = {
+        "time": time_6.hour + ":00",
+        "icon": weather_data_6["summary"]["symbol_code"],
+        "temperature_max": weather_data_6["details"]["air_temperature_max"],
+        "temperature_min": weather_data_6["details"]["air_temperature_min"]
+    }
+
+    time_12 = to_datetime(weather["time"]) + timedelta(hours=12)
+    weather_12 = {
+        "time": time_12.hour + ":00",
+        "icon": weather_data_12["summary"]["symbol_code"]}
 
     return {
-        "weather_data": data,
-        "location": location
+        "weather_now": weather_now,
+        "weather_6": weather_6,
+        "weather_12": weather_12,
+        "last_update": last_update
     }
 
 
-def get_weather(start_time, period):
-    # Get weather icon
-    symbol = period.find("symbol")
-    sym_var = symbol.get("var")
-    sym_text = symbol.get("name")
-    symbol = {"var": sym_var, "text": sym_text}
-
-    # Get precipitation data
-    precipitation = period.find("precipitation")
-    val = precipitation.get("value")
-    precipitation = {"val": val}
-
-    # Get wind direction
-    wind_direction = period.find("windDirection")
-    name = wind_direction.get("name")
-    wind_direction = {"direction": name.lower()}
-
-    # Get wind speed
-    wind_speed = period.find("windSpeed")
-    speed = wind_speed.get("mps")
-    name = wind_speed.get("name")
-    wind_speed = {"speed": speed.replace(".", ",") + " m/s", "name": name}
-
-    # Get temperature
-    temperature = period.find("temperature")
-    unit = temperature.get("unit")
-    val = temperature.get("value")
-    temperature = {"unit": unit[0].upper(), "val": val}
-
-    # Get pressure
-    pressure = period.find("pressure")
-    unit = pressure.get("unit")
-    val = pressure.get("value")
-    pressure = {"unit": unit, "val": val}
-
-    return {
-        "time": start_time.strftime("%H:%M"),
-        "icon": symbol,
-        "precipitation": precipitation,
-        "wind_direction": wind_direction,
-        "wind_speed": wind_speed,
-        "temperature": temperature,
-        "pressure": pressure
-    }
+def get_wind_direction(angle):  # angle is measured in degrees
+    if angle < 30.0 or angle > 330.0:
+        return u"nord"
+    elif angle < 60.0:
+        return u"øst-nordøst"
+    elif angle < 120.0:
+        return u"øst"
+    elif angle < 150.0:
+        return u"øst-sørøst"
+    elif angle < 210.0:
+        return u"sør"
+    elif angle < 240.0:
+        return u"vest-sørvest"
+    elif angle < 300.0:
+        return u"vest"
+    else:
+        return u"vest-nordvest"
 
 
 def get_credits():
@@ -125,4 +118,4 @@ def to_datetime(timestamp):
     year, month, day = date.split("-")
     hour, minute, second = time.split(":")
 
-    return datetime(int(year), int(month), int(day), int(hour), int(minute), int(second))
+    return datetime(int(year), int(month), int(day), int(hour), int(minute), int(second[2:]))

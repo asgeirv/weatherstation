@@ -32,52 +32,31 @@ def print_weather():
 def draw_weather(weather_data):
     # Get current weather
     logger.log("Reading weather data...")
-    weather_now = weather_data["weather_data"][0]
+    weather_now = weather_data["weather_now"]
 
-    icon_now = weather_now["icon"]["var"]
-    icon_name_now = weather_now["icon"]["text"]
+    icon_now = weather_now["icon"]
 
-    temperature_val_now = weather_now["temperature"]["val"]
-    temperature_unit_now = weather_now["temperature"]["unit"]
+    temperature_val_now = weather_now["temperature"]
 
-    wind_speed_now = weather_now["wind_speed"]["speed"]
-    wind_name_now = weather_now["wind_speed"]["name"]
-    wind_direction_now = weather_now["wind_direction"]["direction"]
+    wind_speed_now = weather_now["wind_speed"]
+    wind_direction_now = weather_now["wind_direction"]
 
-    pressure_val_now = weather_now["pressure"]["val"]
-    pressure_unit_now = weather_now["pressure"]["unit"]
+    pressure_val_now = weather_now["pressure"]
 
-    # Get location
-    location = weather_data["location"]
+    # Get weather in 6 hours
+    weather_6 = weather_data["weather_6"]
+    time_6 = weather_6["time"]
+    icon_6 = weather_6["icon"]
+    temperature_val_max_6 = weather_6["temperature_max"]
+    temperature_unit_min_6 = weather_6["temperature_min"]
 
-    # Get future weather 1
-    weather1 = weather_data["weather_data"][1]
-
-    time_1 = weather1["time"]
-
-    icon_1 = weather1["icon"]["var"]
-    icon_name_1 = weather1["icon"]["text"]
-
-    temperature_val_1 = weather1["temperature"]["val"]
-    temperature_unit_1 = weather1["temperature"]["unit"]
-
-    wind_speed_1 = weather1["wind_speed"]["speed"]
-
-    # Get future weather 2
-    weather2 = weather_data["weather_data"][2]
-
-    time_2 = weather2["time"]
-
-    icon_2 = weather2["icon"]["var"]
-    icon_name_2 = weather2["icon"]["text"]
-
-    temperature_val_2 = weather2["temperature"]["val"]
-    temperature_unit_2 = weather2["temperature"]["unit"]
-
-    wind_speed_2 = weather2["wind_speed"]["speed"]
+    # Get weather in 12 hours
+    weather_12 = weather_data["weather_12"]
+    time_12 = weather_12["time"]
+    icon_12 = weather_12["icon"]
 
     # Get credits
-    credits = yr.get_credits()
+    yr_credits = yr.get_credits()
 
     # Initialize E-Ink screen
     logger.log("Initializing E-ink screen...")
@@ -96,50 +75,39 @@ def draw_weather(weather_data):
     icon = Image.open("icons/%s.bmp" % (icon_now))
     image.paste(icon, (5, 5))
     # Temperature
-    draw.text((130, 15), u"%s° %s" % (temperature_val_now, temperature_unit_now), font=font_biggest, fill=0)
-    # Cloudiness text
-    draw.text((15, 95), icon_name_now, font=font_big, fill=0)
+    draw.text((130, 15), u"%f° C" % (temperature_val_now), font=font_biggest, fill=0)
 
-    # Location
-    draw.text((290, 10), "%s" % (location), font=font_small, fill=0)
     # Wind
-    draw.text((300, 30), "%s" % (wind_name_now), font=font_small, fill=0)
-    draw.text((300, 50), "%s" % (wind_speed_now), font=font_small, fill=0)
-    draw.text((300, 70), "%s" % (wind_direction_now), font=font_small, fill=0)
+    draw.text((290, 50), "%f m/s" % (wind_speed_now), font=font_small, fill=0)
+    draw.text((290, 70), "%s" % (wind_direction_now), font=font_small, fill=0)
     # Pressure
-    draw.text((300, 90), "%s %s" % (pressure_val_now, pressure_unit_now), font=font_small, fill=0)
+    draw.text((290, 70), "%f hPa" % (pressure_val_now), font=font_small, fill=0)
 
     # Draw separator
     draw.line((10, 150, 390, 150), fill=0)
 
-    # Draw future weather 1
+    # Draw weather in 6 hours
     # Time
-    draw.text((20, 160), time_1, font=font_small, fill=0)
+    draw.text((20, 160), time_6, font=font_small, fill=0)
     # Weather icon
-    icon1 = Image.open("icons/small/%s.bmp" % (icon_1))
+    icon1 = Image.open("icons/small/%s.bmp" % (icon_6))
     image.paste(icon1, (20, 180))
     # Temperature
-    draw.text((80, 175), u"%s° %s" % (temperature_val_1, temperature_unit_1), font=font_med, fill=0)
-    # Wind
-    draw.text((80, 200), "%s" % (wind_speed_1), font=font_small, fill=0)
+    draw.text((80, 175), u"%f-%f° C" % (temperature_val_max_6, temperature_unit_min_6), font=font_med, fill=0)
 
-    # Draw future weather 2
+    # Draw weather in 12 hours
     # Time
-    draw.text((200, 160), time_2, font=font_small, fill=0)
+    draw.text((200, 160), time_12, font=font_small, fill=0)
     # Weather icon
-    icon2 = Image.open("icons/small/%s.bmp" % (icon_2))
+    icon2 = Image.open("icons/small/%s.bmp" % (icon_12))
     image.paste(icon2, (200, 180))
-    # Temperature
-    draw.text((260, 175), u"%s° %s" % (temperature_val_2, temperature_unit_2), font=font_med, fill=0)
-    # Wind
-    draw.text((260, 200), "%s" % (wind_speed_2), font=font_small, fill=0)
 
     # Draw separator
     draw.line((10, 235, 390, 235), fill=0)
 
     # Credits
-    draw.text((15, 240), credits[0], font=font_small, fill=0)
-    draw.text((15, 260), credits[1], font=font_small, fill=0)
+    draw.text((15, 240), yr_credits[0], font=font_small, fill=0)
+    draw.text((15, 260), yr_credits[1], font=font_small, fill=0)
     # Last updated + IP
     draw.text((15, 280), "Sist oppdatert %s | IP: %s" % (datetime.now(), get_host_ip()), font=font_smallest, fill=0)
 
