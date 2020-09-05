@@ -118,4 +118,4 @@ def to_datetime(timestamp):
     year, month, day = date.split("-")
     hour, minute, second = time.split(":")
 
-    return datetime(int(year), int(month), int(day), int(hour), int(minute), int(second[2:]))
+    return datetime(int(year), int(month), int(day), int(hour), int(minute), int(second[:2]))
