@@ -78,9 +78,9 @@ def draw_weather(weather_data):
     draw.text((130, 15), u"%.1f° C" % (temperature_val_now), font=font_biggest, fill=0)
 
     # Wind
-    draw.text((130, 55), "%.1f m/s %s" % (wind_speed_now, wind_direction_now), font=font_med, fill=0)
+    draw.text((135, 65), "%.1f m/s %s" % (wind_speed_now, wind_direction_now), font=font_med, fill=0)
     # Pressure
-    draw.text((130, 75), "%.0f hPa" % (pressure_val_now), font=font_small, fill=0)
+    draw.text((135, 95), "%.0f hPa" % (pressure_val_now), font=font_small, fill=0)
 
     # Draw separator
     draw.line((10, 150, 390, 150), fill=0)
