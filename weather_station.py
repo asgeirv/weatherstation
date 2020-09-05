@@ -78,10 +78,9 @@ def draw_weather(weather_data):
     draw.text((130, 15), u"%.1f° C" % (temperature_val_now), font=font_biggest, fill=0)
 
     # Wind
-    draw.text((10, 115), "%.1f m/s" % (wind_speed_now), font=font_small, fill=0)
-    draw.text((10, 125), "%s" % (wind_direction_now), font=font_small, fill=0)
+    draw.text((10, 115), "%.1f m/s %s" % (wind_speed_now, wind_direction_now), font=font_med, fill=0)
     # Pressure
-    draw.text((290, 125), "%.0f hPa" % (pressure_val_now), font=font_small, fill=0)
+    draw.text((290, 115), "%.0f hPa" % (pressure_val_now), font=font_small, fill=0)
 
     # Draw separator
     draw.line((10, 150, 390, 150), fill=0)
@@ -93,7 +92,7 @@ def draw_weather(weather_data):
     icon1 = Image.open("icons/small/%s.bmp" % (icon_6))
     image.paste(icon1, (20, 180))
     # Temperature
-    draw.text((80, 185), u"%.0f-%.0f° C" % (temperature_val_max_6, temperature_unit_min_6), font=font_med, fill=0)
+    draw.text((80, 190), u"%.0f-%.0f° C" % (temperature_val_max_6, temperature_unit_min_6), font=font_med, fill=0)
 
     # Draw weather in 12 hours
     # Time
