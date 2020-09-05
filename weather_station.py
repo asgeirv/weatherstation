@@ -6,9 +6,9 @@ import time
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 import traceback
-import epd4in2
-import yr
-import logger
+import include.epd4in2 as epd4in2
+import include.yr as yr
+import include.logger as logger
 import socket
 
 font_smallest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 12)

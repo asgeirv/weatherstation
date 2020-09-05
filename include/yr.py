@@ -5,7 +5,7 @@ import codecs
 from datetime import datetime, timedelta
 import json
 import configparser
-import logger
+import include.logger as logger
 
 
 def read_config():
