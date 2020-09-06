@@ -71,7 +71,7 @@ def draw_weather(weather_data):
     # Draw future weather
     item = 0
     while item < len(weather_future):
-        draw_future_weather(weather_future[item], draw, item)
+        draw_future_weather(weather_future[item], image, item)
         item += 1
 
     # Draw separator
@@ -91,7 +91,9 @@ def draw_weather(weather_data):
     epd.sleep()
 
 
-def draw_future_weather(weather_data, draw, pos):  # pos starts at 0
+def draw_future_weather(weather_data, image, pos):  # pos starts at 0
+    draw = ImageDraw.Draw(image)
+
     # y positions for future weather are all the same
     future_time_y = 150
     future_icon_y = 175
