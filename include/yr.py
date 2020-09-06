@@ -53,13 +53,23 @@ def get_forecast():
 
     # Get forecasts
     weather_data_now = data["properties"]["timeseries"][0]
-    weather_data_future1 = data["properties"]["timeseries"][6]
-    weather_data_future2 = data["properties"]["timeseries"][12]
+    weather_data_future1 = data["properties"]["timeseries"][3]
+    weather_data_future2 = data["properties"]["timeseries"][6]
+    weather_data_future3 = data["properties"]["timeseries"][9]
+    weather_data_future4 = data["properties"]["timeseries"][12]
+    weather_data_future5 = data["properties"]["timeseries"][15]
+    weather_data_future6 = data["properties"]["timeseries"][18]
 
     return {
         "weather_now": extract_weather_data(weather_data_now),
-        "weather_future1": extract_weather_data(weather_data_future1),
-        "weather_future2": extract_weather_data(weather_data_future2),
+        "weather_future": [
+            extract_weather_data(weather_data_future1),
+            extract_weather_data(weather_data_future2),
+            extract_weather_data(weather_data_future3),
+            extract_weather_data(weather_data_future4),
+            extract_weather_data(weather_data_future5),
+            extract_weather_data(weather_data_future6)
+        ],
         "last_update": last_update
     }
 

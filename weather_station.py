@@ -33,8 +33,7 @@ def draw_weather(weather_data):
     # Get weather
     logger.log("Reading weather data...")
     weather_now = weather_data["weather_now"]
-    weather_future1 = weather_data["weather_future1"]
-    weather_future2 = weather_data["weather_future2"]
+    weather_future = weather_data["weather_future"]
 
     # Get credits
     yr_credits = yr.get_credits()
@@ -69,33 +68,9 @@ def draw_weather(weather_data):
     # Draw separator
     draw.line((10, 140, 390, 140), fill=0)
 
-    # y positions for future weather are all the same
-    future_time_y = 150
-    future_icon_y = 175
-    future_temperature_y = 215
-
-    # x positions all have the same offset
-    x_offset = 80
-
-    # Draw first future weather
-    future1_x = 20
-    # Time
-    draw.text((future1_x, future_time_y), weather_future1["time"], font=font_small, fill=0)
-    # Weather icon
-    icon1 = Image.open("icons/small/%s.bmp" % (weather_future1["icon"]))
-    image.paste(icon1, (future1_x, future_icon_y))
-    # Temperature
-    draw.text((future1_x + 5, future_temperature_y), u"%.1f° C" % (weather_future1["temperature"]), font=font_smallest, fill=0)
-
-    # Draw second future weather
-    future2_x = future1_x + x_offset
-    # Time
-    draw.text((future2_x, future_time_y), weather_future2["time"], font=font_small, fill=0)
-    # Weather icon
-    icon1 = Image.open("icons/small/%s.bmp" % (weather_future2["icon"]))
-    image.paste(icon1, (future2_x, future_icon_y))
-    # Temperature
-    draw.text((future2_x + 5, future_temperature_y), u"%.1f° C" % (weather_future2["temperature"]), font=font_smallest, fill=0)
+    # Draw future weather
+    for i in len(weather_future):
+        draw_future_weather(weather_future[i], draw, i)
 
     # Draw separator
     draw.line((10, 235, 390, 235), fill=0)
@@ -112,6 +87,27 @@ def draw_weather(weather_data):
     epd.display(epd.getbuffer(image))
     time.sleep(2)
     epd.sleep()
+
+
+def draw_future_weather(weather_data, draw, pos):  # pos starts at 0
+    # y positions for future weather are all the same
+    future_time_y = 150
+    future_icon_y = 175
+    future_temperature_y = 215
+
+    # x positions all have the same offset
+    x_offset = 80
+
+    # Draw weather
+    future_x = 20 + x_offset * pos
+    # Time
+    draw.text((future_x, future_time_y), weather_data["time"], font=font_small, fill=0)
+    # Weather icon
+    icon1 = Image.open("icons/small/%s.bmp" % (weather_data["icon"]))
+    draw.paste(icon1, (future_x, future_icon_y))
+    # Temperature
+    draw.text((future_x + 5, future_temperature_y), u"%.1f° C" % (weather_data["temperature"]), font=font_smallest,
+              fill=0)
 
 
 def draw_error(err_msg):
