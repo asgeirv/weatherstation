@@ -58,10 +58,12 @@ def draw_weather(weather_data):
     # Temperature
     temperature_x = 130
     temperature_y = 15
-    draw.text((temperature_x, temperature_y), u"%.1f° C" % (weather_now["temperature"]).replace(".", ","), font=font_biggest, fill=0)
+    temperature_text = u"%.1f° C" % (weather_now["temperature"])
+    draw.text((temperature_x, temperature_y), temperature_text.replace(".", ","), font=font_biggest, fill=0)
     # Wind
     wind_y = temperature_y + 60
-    draw.text((temperature_x + 5, wind_y), "%.1f m/s %s" % (weather_now["wind_speed"], weather_now["wind_direction"]).replace(".", ","), font=font_med, fill=0)
+    wind_text = "%.1f m/s %s" % (weather_now["wind_speed"], weather_now["wind_direction"])
+    draw.text((temperature_x + 5, wind_y), wind_text.replace(".", ","), font=font_med, fill=0)
     # Pressure
     draw.text((temperature_x + 5, wind_y + 30), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
 
@@ -110,7 +112,7 @@ def draw_future_weather(weather_data, image, pos):  # pos starts at 0
     icon1 = Image.open("icons/small/%s.bmp" % (weather_data["icon"]))
     image.paste(icon1, (future_x, future_icon_y))
     # Temperature
-    draw.text((future_x + 5, future_temperature_y), u"%.1f° C" % (weather_data["temperature"]).replace(".", ","), font=font_smallest,
+    draw.text((future_x + 5, future_temperature_y), u"%.1f° C".replace(".", ",") % (weather_data["temperature"]), font=font_smallest,
               fill=0)
 
 
