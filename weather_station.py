@@ -69,8 +69,10 @@ def draw_weather(weather_data):
     draw.line((10, 140, 390, 140), fill=0)
 
     # Draw future weather
-    for i in len(weather_future):
-        draw_future_weather(weather_future[i], draw, i)
+    item = 0
+    while item < len(weather_future):
+        draw_future_weather(weather_future[item], draw, item)
+        item += 1
 
     # Draw separator
     draw.line((10, 235, 390, 235), fill=0)
