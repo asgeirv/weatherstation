@@ -30,7 +30,7 @@ def print_weather():
 
 
 def draw_weather(weather_data):
-    # Get current weather
+    # Get weather
     logger.log("Reading weather data...")
     weather_now = weather_data["weather_now"]
     weather_future1 = weather_data["weather_future1"]

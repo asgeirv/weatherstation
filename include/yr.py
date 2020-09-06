@@ -51,7 +51,7 @@ def get_forecast():
     # Get last update
     last_update = data["properties"]["meta"]["updated_at"]
 
-    # Get forecasts for the current time, in 6 hours and in 12 hours
+    # Get forecasts
     weather_data_now = data["properties"]["timeseries"][0]
     weather_data_future1 = data["properties"]["timeseries"][6]
     weather_data_future2 = data["properties"]["timeseries"][12]
