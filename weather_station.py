@@ -74,6 +74,9 @@ def draw_weather(weather_data):
     future_icon_y = 175
     future_temperature_y = 215
 
+    # x positions all have the same offset
+    x_offset = 80
+
     # Draw first future weather
     future1_x = 20
     # Time
@@ -85,7 +88,7 @@ def draw_weather(weather_data):
     draw.text((future1_x + 5, future_temperature_y), u"%.1f° C" % (weather_future1["temperature"]), font=font_smallest, fill=0)
 
     # Draw second future weather
-    future2_x = future1_x + 100
+    future2_x = future1_x + x_offset
     # Time
     draw.text((future2_x, future_time_y), weather_future2["time"], font=font_small, fill=0)
     # Weather icon
