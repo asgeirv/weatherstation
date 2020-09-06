@@ -43,50 +43,36 @@ def write_weather_data(weather_data):
     weather_json.close()
 
 
-def get_forecast(config=None):
-    weather_json = get_weather_data(config)
+def get_forecast():
+    weather_json = get_weather_data(read_config())
     # Get forecasts
     data = json.loads(weather_json)
 
     # Get last update
     last_update = data["properties"]["meta"]["updated_at"]
 
-    # Get forecasts for the current time, in 1 hour, in 6 hours and in 12 hours
-    weather = data["properties"]["timeseries"][0]
-
-    weather_data_now = weather["data"]["instant"]["details"]
-    weather_data_1 = weather["data"]["next_1_hours"]
-    weather_data_6 = weather["data"]["next_6_hours"]
-    weather_data_12 = weather["data"]["next_12_hours"]
-
-    # Extract the weather information we care about
-    weather_now = {
-        "time": weather["time"],
-        "icon": weather_data_1["summary"]["symbol_code"],  # for some reason this is not included in the instant field
-        "wind_speed": weather_data_now["wind_speed"],
-        "wind_direction": get_wind_direction(weather_data_now["wind_from_direction"]),
-        "temperature": weather_data_now["air_temperature"],
-        "pressure": weather_data_now["air_pressure_at_sea_level"]
-    }
-
-    time_6 = to_datetime(weather["time"]) + timedelta(hours=6)
-    weather_6 = {
-        "time": str(time_6.hour) + ":00",
-        "icon": weather_data_6["summary"]["symbol_code"],
-        "temperature_max": weather_data_6["details"]["air_temperature_max"],
-        "temperature_min": weather_data_6["details"]["air_temperature_min"]
-    }
-
-    time_12 = to_datetime(weather["time"]) + timedelta(hours=12)
-    weather_12 = {
-        "time": str(time_12.hour) + ":00",
-        "icon": weather_data_12["summary"]["symbol_code"]}
+    # Get forecasts for the current time, in 6 hours and in 12 hours
+    weather_data_now = data["properties"]["timeseries"][0]
+    weather_data_6 = data["properties"]["timeseries"][6]
+    weather_data_12 = data["properties"]["timeseries"][12]
 
     return {
-        "weather_now": weather_now,
-        "weather_6": weather_6,
-        "weather_12": weather_12,
+        "weather_now": extract_weather_data(weather_data_now),
+        "weather_6": extract_weather_data(weather_data_6),
+        "weather_12": extract_weather_data(weather_data_12),
         "last_update": last_update
+    }
+
+
+def extract_weather_data(data):
+    time = to_datetime(data["time"])
+    return {
+        "time": str(time.hour) + ":00",
+        "icon": data["data"]["next_1_hours"]["summary"]["symbol_code"],
+        "wind_speed": data["data"]["instant"]["details"]["wind_speed"],
+        "wind_direction": get_wind_direction(data["data"]["instant"]["details"]["wind_from_direction"]),
+        "temperature": data["data"]["instant"]["details"]["air_temperature"],
+        "pressure": data["data"]["instant"]["details"]["air_pressure_at_sea_level"]
     }
 
 
