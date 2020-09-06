@@ -70,9 +70,9 @@ def draw_weather(weather_data):
     draw.text((20, 150), weather_6["time"], font=font_small, fill=0)
     # Weather icon
     icon1 = Image.open("icons/small/%s.bmp" % (weather_6["icon"]))
-    image.paste(icon1, (20, 180))
+    image.paste(icon1, (20, 170))
     # Temperature
-    draw.text((90, 250), u"%.1f° C" % (weather_6["temperature"]), font=font_smallest, fill=0)
+    draw.text((25, 220), u"%.1f° C" % (weather_6["temperature"]), font=font_smallest, fill=0)
 
     # Draw weather in 12 hours
     # Time
