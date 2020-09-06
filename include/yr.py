@@ -12,10 +12,11 @@ def read_config():
     config_parser = configparser.ConfigParser()
     config_parser.read_file(open(r'weather.conf'))
 
-    lat = config_parser.get("loc", "lat")
-    long = config_parser.get("loc", "long")
-
-    return {"lat": lat, "long": long}
+    return {
+        "lat": config_parser.get("loc", "lat"),
+        "long": config_parser.get("loc", "long"),
+        "future_interval": config_parser.get("future", "interval")
+    }
 
 
 def get_weather_data(config=None):
@@ -44,7 +45,12 @@ def write_weather_data(weather_data):
 
 
 def get_forecast():
-    weather_json = get_weather_data(read_config())
+    config = read_config()
+    weather_json = get_weather_data(config)
+
+    first_future_time = 6
+    future_interval = int(config["future_interval"])
+
     # Get forecasts
     data = json.loads(weather_json)
 
@@ -53,11 +59,11 @@ def get_forecast():
 
     # Get forecasts
     weather_data_now = data["properties"]["timeseries"][0]
-    weather_data_future1 = data["properties"]["timeseries"][6]
-    weather_data_future2 = data["properties"]["timeseries"][10]
-    weather_data_future3 = data["properties"]["timeseries"][14]
-    weather_data_future4 = data["properties"]["timeseries"][18]
-    weather_data_future5 = data["properties"]["timeseries"][22]
+    weather_data_future1 = data["properties"]["timeseries"][first_future_time]
+    weather_data_future2 = data["properties"]["timeseries"][first_future_time + future_interval]
+    weather_data_future3 = data["properties"]["timeseries"][first_future_time + (future_interval * 2)]
+    weather_data_future4 = data["properties"]["timeseries"][first_future_time + (future_interval * 3)]
+    weather_data_future5 = data["properties"]["timeseries"][first_future_time + (future_interval * 4)]
 
     return {
         "weather_now": extract_weather_data(weather_data_now),
