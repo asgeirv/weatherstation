@@ -149,5 +149,5 @@ def get_host_ip():
     return IP
 
 
-locale.setlocale(locale.LC_ALL, "nb_NO")
+locale.setlocale(locale.LC_NUMERIC, "nb_NO")
 print_weather()
