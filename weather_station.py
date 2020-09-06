@@ -33,8 +33,8 @@ def draw_weather(weather_data):
     # Get current weather
     logger.log("Reading weather data...")
     weather_now = weather_data["weather_now"]
-    weather_6 = weather_data["weather_6"]
-    weather_12 = weather_data["weather_12"]
+    weather_future1 = weather_data["weather_future1"]
+    weather_future2 = weather_data["weather_future2"]
 
     # Get credits
     yr_credits = yr.get_credits()
@@ -65,23 +65,23 @@ def draw_weather(weather_data):
     # Draw separator
     draw.line((10, 140, 390, 140), fill=0)
 
-    # Draw weather in 6 hours
+    # Draw first future weather
     # Time
-    draw.text((20, 150), weather_6["time"], font=font_small, fill=0)
+    draw.text((20, 150), weather_future1["time"], font=font_small, fill=0)
     # Weather icon
-    icon1 = Image.open("icons/small/%s.bmp" % (weather_6["icon"]))
+    icon1 = Image.open("icons/small/%s.bmp" % (weather_future1["icon"]))
     image.paste(icon1, (20, 175))
     # Temperature
-    draw.text((25, 215), u"%.1f° C" % (weather_6["temperature"]), font=font_smallest, fill=0)
+    draw.text((25, 215), u"%.1f° C" % (weather_future1["temperature"]), font=font_smallest, fill=0)
 
-    # Draw weather in 12 hours
+    # Draw second future weather
     # Time
-    draw.text((200, 150), weather_12["time"], font=font_small, fill=0)
+    draw.text((200, 150), weather_future2["time"], font=font_small, fill=0)
     # Weather icon
-    icon1 = Image.open("icons/small/%s.bmp" % (weather_12["icon"]))
+    icon1 = Image.open("icons/small/%s.bmp" % (weather_future2["icon"]))
     image.paste(icon1, (200, 180))
     # Temperature
-    draw.text((270, 250), u"%.1f° C" % (weather_12["temperature"]), font=font_smallest, fill=0)
+    draw.text((270, 250), u"%.1f° C" % (weather_future2["temperature"]), font=font_smallest, fill=0)
 
     # Draw separator
     draw.line((10, 235, 390, 235), fill=0)
