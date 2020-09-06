@@ -55,33 +55,44 @@ def draw_weather(weather_data):
     # Weather icon
     icon = Image.open("icons/%s.bmp" % (weather_now["icon"]))
     image.paste(icon, (10, 10))
+    # Text box positions are related to one another
     # Temperature
-    draw.text((130, 15), u"%.1f° C" % (weather_now["temperature"]), font=font_biggest, fill=0)
+    temperature_x = 130
+    temperature_y = 15
+    draw.text((temperature_x, temperature_y), u"%.1f° C" % (weather_now["temperature"]), font=font_biggest, fill=0)
     # Wind
-    draw.text((135, 75), "%.1f m/s %s" % (weather_now["wind_speed"], weather_now["wind_direction"]), font=font_med, fill=0)
+    wind_y = temperature_y + 60
+    draw.text((temperature_x + 5, wind_y), "%.1f m/s %s" % (weather_now["wind_speed"], weather_now["wind_direction"]), font=font_med, fill=0)
     # Pressure
-    draw.text((135, 105), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
+    draw.text((temperature_x + 5, wind_y + 30), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
 
     # Draw separator
     draw.line((10, 140, 390, 140), fill=0)
 
+    # y positions for future weather are all the same
+    future_time_y = 150
+    future_icon_y = 175
+    future_temperature_y = 215
+
     # Draw first future weather
+    future1_x = 20
     # Time
-    draw.text((20, 150), weather_future1["time"], font=font_small, fill=0)
+    draw.text((future1_x, future_time_y), weather_future1["time"], font=font_small, fill=0)
     # Weather icon
     icon1 = Image.open("icons/small/%s.bmp" % (weather_future1["icon"]))
-    image.paste(icon1, (20, 175))
+    image.paste(icon1, (future1_x, future_icon_y))
     # Temperature
-    draw.text((25, 215), u"%.1f° C" % (weather_future1["temperature"]), font=font_smallest, fill=0)
+    draw.text((future1_x + 5, future_temperature_y), u"%.1f° C" % (weather_future1["temperature"]), font=font_smallest, fill=0)
 
     # Draw second future weather
+    future2_x = future1_x + 100
     # Time
-    draw.text((200, 150), weather_future2["time"], font=font_small, fill=0)
+    draw.text((future2_x, future_time_y), weather_future2["time"], font=font_small, fill=0)
     # Weather icon
     icon1 = Image.open("icons/small/%s.bmp" % (weather_future2["icon"]))
-    image.paste(icon1, (200, 180))
+    image.paste(icon1, (future2_x, future_icon_y))
     # Temperature
-    draw.text((270, 250), u"%.1f° C" % (weather_future2["temperature"]), font=font_smallest, fill=0)
+    draw.text((future2_x + 5, future_temperature_y), u"%.1f° C" % (weather_future2["temperature"]), font=font_smallest, fill=0)
 
     # Draw separator
     draw.line((10, 235, 390, 235), fill=0)
