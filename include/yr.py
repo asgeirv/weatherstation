@@ -75,7 +75,7 @@ def get_forecast():
 def extract_weather_data(data):
     time = to_datetime(data["time"])
     return {
-        "time": str(time.hour) + ":00",
+        "time": str(time.hour).zfill(2) + ":00",
         "icon": data["data"]["next_1_hours"]["summary"]["symbol_code"],
         "wind_speed": data["data"]["instant"]["details"]["wind_speed"],
         "wind_direction": get_wind_direction(data["data"]["instant"]["details"]["wind_from_direction"]),
