@@ -54,7 +54,7 @@ def draw_weather(weather_data):
     # Draw current weather
     # Weather icon
     icon = Image.open("icons/%s.bmp" % (weather_now["icon"]))
-    image.paste(icon, (5, 5))
+    image.paste(icon, (10, 10))
     # Temperature
     draw.text((130, 15), u"%.1f° C" % (weather_now["temperature"]), font=font_biggest, fill=0)
     # Wind
