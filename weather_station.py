@@ -26,7 +26,7 @@ def print_weather():
         draw_weather(weather_data)
 
     except:
-        draw_error("Sjekk /var/log/weatherstation_log.txt\nIP: " + get_host_ip())
+        draw_error("Se /var/log/weatherstation_log.txt\nIP: " + get_host_ip())
 
 
 def draw_weather(weather_data):
