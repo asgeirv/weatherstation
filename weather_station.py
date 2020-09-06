@@ -10,6 +10,7 @@ import include.epd4in2 as epd4in2
 import include.yr as yr
 import include.logger as logger
 import socket
+import locale
 
 font_smallest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 12)
 font_small = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 16)
@@ -148,4 +149,5 @@ def get_host_ip():
     return IP
 
 
+locale.setlocale(locale.LC_ALL, "nb_NO")
 print_weather()
