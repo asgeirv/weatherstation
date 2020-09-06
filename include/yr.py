@@ -91,22 +91,38 @@ def extract_weather_data(data):
 
 
 def get_wind_direction(angle):  # angle is measured in degrees
-    if angle < 30.0 or angle > 330.0:
+    if angle < 11.25 or angle > 348.75:
         return u"nord"
-    elif angle < 60.0:
+    elif angle < 33.75:
+        return u"nord-nordøst"
+    elif angle < 56.25:
+        return u"nordøst"
+    elif angle < 78.75:
         return u"øst-nordøst"
-    elif angle < 120.0:
+    elif angle < 101.25:
         return u"øst"
-    elif angle < 150.0:
+    elif angle < 123.75:
         return u"øst-sørøst"
-    elif angle < 210.0:
+    elif angle < 146.25:
+        return u"sørøst"
+    elif angle < 168.75:
+        return u"sør-sørøst"
+    elif angle < 191.25:
         return u"sør"
-    elif angle < 240.0:
+    elif angle < 213.75:
+        return u"sør-sørvest"
+    elif angle < 236.25:
+        return u"sørvest"
+    elif angle < 258.75:
         return u"vest-sørvest"
-    elif angle < 300.0:
+    elif angle < 281.25:
         return u"vest"
-    else:
+    elif angle < 303.25:
         return u"vest-nordvest"
+    elif angle < 326.25:
+        return u"nordvest"
+    else:
+        return u"nord-nordvest"
 
 
 def get_credits():
