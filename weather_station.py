@@ -98,7 +98,7 @@ def draw_future_weather(weather_data, image, pos):  # pos starts at 0
 
     # y positions for future weather are all the same
     future_time_y = 150
-    future_icon_y = 175
+    future_icon_y = 165
     future_temperature_y = 215
 
     # x positions all have the same offset
