@@ -68,7 +68,7 @@ def draw_weather(weather_data):
     draw.text((temperature_x + 5, wind_y + 30), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
 
     # Draw separator
-    draw.line((10, 140, 390, 140), fill=0)
+    draw.line((10, 135, 390, 135), fill=0)
 
     # Draw future weather
     item = 0
@@ -97,7 +97,7 @@ def draw_future_weather(weather_data, image, pos):  # pos starts at 0
     draw = ImageDraw.Draw(image)
 
     # y positions for future weather are all the same
-    future_time_y = 150
+    future_time_y = 145
     future_icon_y = 165
     future_temperature_y = 215
 
