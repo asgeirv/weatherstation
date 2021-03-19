@@ -1,5 +1,5 @@
 # Weather Station
-Gets weather data from www.yr.no and displays it on a Waveshare 4.3 inch E-ink screen.
+Gets weather data from www.yr.no and displays it on a Waveshare 7.5 inch E-ink screen (https://www.waveshare.com/wiki/7.5inch_e-Paper_HAT).
 
 ### Notes
 Make a copy of `weather-base-config.conf` and rename the copy to `weather.conf`. Edit this file to configure. 
