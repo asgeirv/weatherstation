@@ -1,5 +1,5 @@
 # Weather Station
-Gets weather data from www.yr.no and displays it on a Waveshare 7.5 inch E-ink screen (https://www.waveshare.com/wiki/7.5inch_e-Paper_HAT).
+Gets weather data from www.yr.no and displays it on a Waveshare 5.65 7-color inch E-ink screen (https://www.waveshare.com/wiki/5.65inch_e-Paper_Module_(F)).
 
 ### Notes
 Make a copy of `weather-base-config.conf` and rename the copy to `weather.conf`. Edit this file to configure. 
@@ -14,5 +14,9 @@ Configure cron (`crontab -e`) to run once every hour and on reboot:
 The SSL connection to yr.no requires an RNG with sufficient entropy, when running headless the inbuilt Raspberry Pi one is not good enough so install `haveged` (http://issihosts.com/haveged/):
 
 `sudo apt install haveged`
+
+The application uses the Lato font:
+
+`sudo apt install fonts-lato`
 
 Also make sure that `var/log/weatherstation_log.txt` exists and is writable.
