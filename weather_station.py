@@ -6,7 +6,7 @@ import time
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 import traceback
-import include.epd4in2 as epd4in2
+import include.epd5in65f as epd5in65f
 import include.yr as yr
 import include.logger as logger
 import socket
@@ -40,13 +40,13 @@ def draw_weather(weather_data):
 
     # Initialize E-Ink screen
     logger.log("Initializing E-ink screen...")
-    epd = epd4in2.EPD()
+    epd = epd5in65f.EPD()
     epd.init()
     epd.Clear(0xFF)
 
     # Initialize image
     logger.log("Initializing weather report...")
-    image = Image.new("1", (epd4in2.EPD_WIDTH, epd4in2.EPD_HEIGHT), 255)
+    image = Image.new("1", (epd5in65f.EPD_WIDTH, epd5in65f.EPD_HEIGHT), 255)
 
     draw = ImageDraw.Draw(image)
 
@@ -120,12 +120,12 @@ def draw_future_weather(weather_data, image, pos):  # pos starts at 0
 def draw_error(err_msg):
     logger.log("traceback.format_exc():\n" + traceback.format_exc())
 
-    epd = epd4in2.EPD()
+    epd = epd5in65f.EPD()
     epd.init()
     epd.Clear(0xFF)
 
     # Initialize image
-    image = Image.new("1", (epd4in2.EPD_WIDTH, epd4in2.EPD_HEIGHT), 255)
+    image = Image.new("1", (epd5in65f.EPD_WIDTH, epd5in65f.EPD_HEIGHT), 255)
     draw = ImageDraw.Draw(image)
     draw.text((10, 100), "Noe gikk galt :(", font=font_biggest, fill=0)
     draw.text((10, 170), err_msg, font=font_med, fill=0)
