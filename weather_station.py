@@ -42,7 +42,7 @@ def draw_weather(weather_data):
     logger.log("Initializing E-ink screen...")
     epd = epd5in65f.EPD()
     epd.init()
-    epd.Clear(0xFF)
+    epd.Clear()
 
     # Initialize image
     logger.log("Initializing weather report...")
@@ -122,7 +122,7 @@ def draw_error(err_msg):
 
     epd = epd5in65f.EPD()
     epd.init()
-    epd.Clear(0xFF)
+    epd.Clear()
 
     # Initialize image
     image = Image.new("1", (epd5in65f.EPD_WIDTH, epd5in65f.EPD_HEIGHT), 255)
