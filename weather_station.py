@@ -61,14 +61,14 @@ def draw_weather(weather_data):
     temperature_text = u"%.1f° C" % (weather_now["temperature"])
     draw.text((temperature_x, temperature_y), temperature_text.replace(".", ","), font=font_biggest, fill=0)
     # Wind
-    wind_y = temperature_y + 60
+    wind_y = temperature_y + 70
     wind_text = "%.1f m/s %s" % (weather_now["wind_speed"], weather_now["wind_direction"])
     draw.text((temperature_x + 5, wind_y), wind_text.replace(".", ","), font=font_med, fill=0)
     # Pressure
-    draw.text((temperature_x + 5, wind_y + 30), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
+    draw.text((temperature_x + 5, wind_y + 35), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
 
     # Draw separator
-    draw.line((10, 140, epd5in65f.EPD_WIDTH - 10, 140), fill=0)
+    draw.line((10, wind_y + 60, epd5in65f.EPD_WIDTH - 10, wind_y + 60), fill=0)
 
     # Draw future weather
     item = 0
