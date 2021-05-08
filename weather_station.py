@@ -65,15 +65,15 @@ def draw_weather(weather_data):
     wind_text = "%.1f m/s %s" % (weather_now["wind_speed"], weather_now["wind_direction"])
     draw.text((temperature_x + 5, wind_y), wind_text.replace(".", ","), font=font_med, fill=0)
     # Pressure
-    draw.text((temperature_x + 5, wind_y + 35), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
+    draw.text((temperature_x + 5, wind_y + 40), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
 
     # Draw separator
-    draw.line((10, wind_y + 60, epd5in65f.EPD_WIDTH - 10, wind_y + 60), fill=0)
+    draw.line((10, wind_y + 70, epd5in65f.EPD_WIDTH - 10, wind_y + 70), fill=0)
 
     # Draw future weather
     item = 0
     while item < len(weather_future):
-        draw_future_weather(weather_future[item], image, item)
+        draw_future_weather(weather_future[item], image, item, wind_y + 80)
         item += 1
 
     # Draw separator
@@ -92,12 +92,12 @@ def draw_weather(weather_data):
     epd.sleep()
 
 
-def draw_future_weather(weather_data, image, pos):  # pos starts at 0
+def draw_future_weather(weather_data, image, pos, y_pos):  # pos starts at 0
     draw = ImageDraw.Draw(image)
 
     # y positions for future weather are all the same
-    future_y = 160
-    future_temperature_y = 185
+    future_y = y_pos
+    future_temperature_y = y_pos + 15
 
     # x positions all have the same offset
     x_offset = 115
