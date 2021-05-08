@@ -90,6 +90,7 @@ def extract_weather_data(data):
         "wind_speed_of_gust": data["data"]["instant"]["details"]["wind_speed_of_gust"],
         "wind_direction": get_wind_direction(data["data"]["instant"]["details"]["wind_from_direction"]),
         "temperature": data["data"]["instant"]["details"]["air_temperature"],
+        "cloud_cover": data["data"]["instant"]["details"]["cloud_area_fraction"],
         "pressure": data["data"]["instant"]["details"]["air_pressure_at_sea_level"]
     }
 

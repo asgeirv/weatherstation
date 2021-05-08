@@ -70,10 +70,15 @@ def draw_weather(weather_data):
     draw.text((wind_x, wind_y + y_offset), wind_gust_text.replace(".", ","), font=font_small, fill=0)
     # Pressure
     draw.text((wind_x, wind_y + y_offset * 2), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
+    # Cloud cover
+    draw.text((wind_x, wind_y + y_offset * 3), "%.1f %s skyet" % (weather_now["cloud_cover"], "%"),
+              font=font_small, fill=0)
     # Precipitation
     max_precipitation = weather_now["precipitation_max"]
     if max_precipitation > 0:
-        draw.text((wind_x, wind_y + y_offset * 3), "%.1f prosent %.0f-%.0f mm" % (weather_now["precipitation_probability"], weather_now["precipitation_min"], max_precipitation), font=font_small, fill=0)
+        draw.text((wind_x, wind_y + y_offset * 4), "%.1f%s %.0f-%.0f mm" % (
+            weather_now["precipitation_probability"], "%", weather_now["precipitation_min"], max_precipitation),
+                  font=font_small, fill=0)
 
     # Draw separator
     draw.line((10, 130, epd5in65f.EPD_WIDTH - 10, 130), fill=0)
@@ -85,12 +90,13 @@ def draw_weather(weather_data):
         item += 1
 
     # Draw separator
-    draw.line((10, 245, epd5in65f.EPD_WIDTH - 10, 245), fill=0)
+    draw.line((10, 235, epd5in65f.EPD_WIDTH - 10, 235), fill=0)
 
     # Credits
     draw.text((15, epd5in65f.EPD_HEIGHT - 40), "%s %s" % (yr_credits[0], yr_credits[1]), font=font_small, fill=0)
     # Last updated + IP
-    draw.text((15, epd5in65f.EPD_HEIGHT - 20), "Sist oppdatert %s | IP: %s" % (datetime.now(), get_host_ip()), font=font_smallest, fill=0)
+    draw.text((15, epd5in65f.EPD_HEIGHT - 20), "Sist oppdatert %s | IP: %s" % (datetime.now(), get_host_ip()),
+              font=font_smallest, fill=0)
 
     # Draw weather report
     print("Drawing weather report...")
@@ -124,8 +130,8 @@ def draw_future_weather(weather_data, image, pos, y_pos):  # pos starts at 0
     # Precipitation
     max_precipitation = weather_data["precipitation_max"]
     if max_precipitation > 0:
-        draw.text((future_x + 55, future_temperature_y + 20), "%.1f prosent\n%.0f-%.0f mm" % (
-            weather_data["precipitation_probability"], weather_data["precipitation_min"], max_precipitation),
+        draw.text((future_x + 55, future_temperature_y + 20), "%.1f%s\n%.0f-%.0f mm" % (
+            weather_data["precipitation_probability"], "%", weather_data["precipitation_min"], max_precipitation),
                   font=font_small, fill=0)
 
 
