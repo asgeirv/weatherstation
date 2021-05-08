@@ -53,7 +53,7 @@ def draw_weather(weather_data):
     # Draw current weather
     # Weather icon
     icon = Image.open("icons/%s.bmp" % (weather_now["icon"]))
-    image.paste(icon, (10, 20))
+    image.paste(icon, (10, 30))
     # Text box positions are relative to one another
     # Temperature
     temperature_x = 130
@@ -77,7 +77,7 @@ def draw_weather(weather_data):
         item += 1
 
     # Draw separator
-    draw.line((10, 235, epd5in65f.EPD_WIDTH - 10, 235), fill=0)
+    draw.line((10, 245, epd5in65f.EPD_WIDTH - 10, 245), fill=0)
 
     # Credits
     draw.text((15, epd5in65f.EPD_HEIGHT - 40), "%s %s" % (yr_credits[0], yr_credits[1]), font=font_small, fill=0)
