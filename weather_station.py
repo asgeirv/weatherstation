@@ -15,7 +15,7 @@ font_smallest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.
 font_small = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 18)
 font_med = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 28)
 font_big = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 36)
-font_biggest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 56)
+font_biggest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 72)
 
 
 def print_weather():
@@ -61,11 +61,15 @@ def draw_weather(weather_data):
     temperature_text = u"%.1f° C" % (weather_now["temperature"])
     draw.text((temperature_x, temperature_y), temperature_text.replace(".", ","), font=font_biggest, fill=0)
     # Wind
-    wind_y = temperature_y + 70
+    wind_x = epd5in65f.EPD_WIDTH - 100
+    wind_y = 10
+    y_offset = 20
     wind_text = "%.1f m/s %s" % (weather_now["wind_speed"], weather_now["wind_direction"])
-    draw.text((temperature_x + 5, wind_y), wind_text.replace(".", ","), font=font_med, fill=0)
+    draw.text((wind_x, wind_y), wind_text.replace(".", ","), font=font_small, fill=0)
+    wind_gust_text = "%.1f m/s" % weather_now["wind_speed_of_gust"]
+    draw.text((wind_x, wind_y + y_offset), "%.1f m/s vindkast" % wind_gust_text.replace(".", ","), font=font_small, fill=0)
     # Pressure
-    draw.text((temperature_x + 5, wind_y + 40), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
+    draw.text((wind_x, wind_y + y_offset * 2), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
 
     # Draw separator
     draw.line((10, wind_y + 70, epd5in65f.EPD_WIDTH - 10, wind_y + 70), fill=0)

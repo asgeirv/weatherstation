@@ -84,6 +84,7 @@ def extract_weather_data(data):
         "time": str(time.hour).zfill(2) + ":00",
         "icon": data["data"]["next_1_hours"]["summary"]["symbol_code"],
         "wind_speed": data["data"]["instant"]["details"]["wind_speed"],
+        "wind_speed_of_gust": data["data"]["instant"]["details"]["wind_speed_of_gust"],
         "wind_direction": get_wind_direction(data["data"]["instant"]["details"]["wind_from_direction"]),
         "temperature": data["data"]["instant"]["details"]["air_temperature"],
         "pressure": data["data"]["instant"]["details"]["air_pressure_at_sea_level"]
