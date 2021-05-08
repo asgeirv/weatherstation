@@ -15,7 +15,7 @@ font_smallest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.
 font_small = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 20)
 font_med = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 28)
 font_big = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 36)
-font_biggest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 52)
+font_biggest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 56)
 
 
 def print_weather():
@@ -54,7 +54,7 @@ def draw_weather(weather_data):
     # Weather icon
     icon = Image.open("icons/%s.bmp" % (weather_now["icon"]))
     image.paste(icon, (10, 10))
-    # Text box positions are related to one another
+    # Text box positions are relative to one another
     # Temperature
     temperature_x = 130
     temperature_y = 15
@@ -68,7 +68,7 @@ def draw_weather(weather_data):
     draw.text((temperature_x + 5, wind_y + 30), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
 
     # Draw separator
-    draw.line((10, 135, 390, 135), fill=0)
+    draw.line((10, 140, epd5in65f.EPD_WIDTH - 10, 140), fill=0)
 
     # Draw future weather
     item = 0
@@ -77,7 +77,7 @@ def draw_weather(weather_data):
         item += 1
 
     # Draw separator
-    draw.line((10, 235, 390, 235), fill=0)
+    draw.line((10, 240, epd5in65f.EPD_WIDTH - 10, 240), fill=0)
 
     # Credits
     draw.text((15, 240), yr_credits[0], font=font_small, fill=0)
@@ -97,9 +97,9 @@ def draw_future_weather(weather_data, image, pos):  # pos starts at 0
     draw = ImageDraw.Draw(image)
 
     # y positions for future weather are all the same
-    future_time_y = 145
-    future_icon_y = 165
-    future_temperature_y = 215
+    future_time_y = 150
+    future_icon_y = 175
+    future_temperature_y = 225
 
     # x positions all have the same offset
     x_offset = 80
