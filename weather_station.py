@@ -61,7 +61,7 @@ def draw_weather(weather_data):
     temperature_text = u"%.1f° C" % (weather_now["temperature"])
     draw.text((temperature_x, temperature_y), temperature_text.replace(".", ","), font=font_biggest, fill=0)
     # Wind
-    wind_x = epd5in65f.EPD_WIDTH - 100
+    wind_x = epd5in65f.EPD_WIDTH - 180
     wind_y = 10
     y_offset = 20
     wind_text = "%.1f m/s %s" % (weather_now["wind_speed"], weather_now["wind_direction"])
@@ -72,7 +72,7 @@ def draw_weather(weather_data):
     draw.text((wind_x, wind_y + y_offset * 2), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
 
     # Draw separator
-    draw.line((10, wind_y + 70, epd5in65f.EPD_WIDTH - 10, wind_y + 70), fill=0)
+    draw.line((10, 150, epd5in65f.EPD_WIDTH - 10, 150), fill=0)
 
     # Draw future weather
     item = 0
