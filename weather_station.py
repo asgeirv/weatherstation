@@ -77,7 +77,7 @@ def draw_weather(weather_data):
     # Draw future weather
     item = 0
     while item < len(weather_future):
-        draw_future_weather(weather_future[item], image, item, wind_y + 95)
+        draw_future_weather(weather_future[item], image, item, 170)
         item += 1
 
     # Draw separator
