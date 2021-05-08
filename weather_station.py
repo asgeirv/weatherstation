@@ -80,8 +80,8 @@ def draw_weather(weather_data):
     draw.line((10, 220, epd5in65f.EPD_WIDTH - 10, 220), fill=0)
 
     # Credits
-    draw.text((15, 240), yr_credits[0], font=font_small, fill=0)
-    draw.text((15, 260), yr_credits[1], font=font_small, fill=0)
+    draw.text((15, epd5in65f.EPD_HEIGHT - 60), yr_credits[0], font=font_small, fill=0)
+    draw.text((15, epd5in65f.EPD_HEIGHT - 20), yr_credits[1], font=font_small, fill=0)
     # Last updated + IP
     draw.text((15, 280), "Sist oppdatert %s | IP: %s" % (datetime.now(), get_host_ip()), font=font_smallest, fill=0)
 
@@ -97,8 +97,8 @@ def draw_future_weather(weather_data, image, pos):  # pos starts at 0
     draw = ImageDraw.Draw(image)
 
     # y positions for future weather are all the same
-    future_y = 150
-    future_temperature_y = 175
+    future_y = 160
+    future_temperature_y = 185
 
     # x positions all have the same offset
     x_offset = 115
