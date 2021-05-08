@@ -71,9 +71,9 @@ def draw_weather(weather_data):
     # Pressure
     draw.text((wind_x, wind_y + y_offset * 2), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
     # Precipitation
-    probability = weather_now["precipitation_probability"]
-    if probability > 0:
-        draw.text((wind_x, wind_y + y_offset * 3), "%.1f prosent %.0f-%.0f mm" % (probability, weather_now["precipitation_min"], weather_now["precipitation_max"]), font=font_small, fill=0)
+    max_precipitation = weather_now["precipitation_max"]
+    if max_precipitation > 0:
+        draw.text((wind_x, wind_y + y_offset * 3), "%.1f prosent %.0f-%.0f mm" % (weather_now["precipitation_probability"], weather_now["precipitation_min"], max_precipitation), font=font_small, fill=0)
 
     # Draw separator
     draw.line((10, 150, epd5in65f.EPD_WIDTH - 10, 150), fill=0)
