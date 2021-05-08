@@ -80,10 +80,9 @@ def draw_weather(weather_data):
     draw.line((10, 220, epd5in65f.EPD_WIDTH - 10, 220), fill=0)
 
     # Credits
-    draw.text((15, epd5in65f.EPD_HEIGHT - 60), yr_credits[0], font=font_small, fill=0)
-    draw.text((15, epd5in65f.EPD_HEIGHT - 20), yr_credits[1], font=font_small, fill=0)
+    draw.text((15, epd5in65f.EPD_HEIGHT - 40), "%s %s" % (yr_credits[0], yr_credits[1]), font=font_small, fill=0)
     # Last updated + IP
-    draw.text((15, 280), "Sist oppdatert %s | IP: %s" % (datetime.now(), get_host_ip()), font=font_smallest, fill=0)
+    draw.text((15, epd5in65f.EPD_HEIGHT - 20), "Sist oppdatert %s | IP: %s" % (datetime.now(), get_host_ip()), font=font_smallest, fill=0)
 
     # Draw weather report
     print("Drawing weather report...")
