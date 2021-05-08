@@ -71,7 +71,7 @@ def draw_weather(weather_data):
     # Pressure
     draw.text((wind_x, wind_y + y_offset * 2), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
     # Cloud cover
-    draw.text((wind_x, wind_y + y_offset * 3), "%.1f %s skyet" % (weather_now["cloud_cover"], "%"),
+    draw.text((wind_x, wind_y + y_offset * 3), "%.1f%s skyet" % (weather_now["cloud_cover"], "%"),
               font=font_small, fill=0)
     # Precipitation
     max_precipitation = weather_now["precipitation_max"]
@@ -130,7 +130,7 @@ def draw_future_weather(weather_data, image, pos, y_pos):  # pos starts at 0
     # Precipitation
     max_precipitation = weather_data["precipitation_max"]
     if max_precipitation > 0:
-        draw.text((future_x + 55, future_temperature_y + 20), "%.1f%s\n%.0f-%.0f mm" % (
+        draw.text((future_x + 55, future_temperature_y + 20), "%.1f%s %.0f-%.0f mm" % (
             weather_data["precipitation_probability"], "%", weather_data["precipitation_min"], max_precipitation),
                   font=font_small, fill=0)
 
