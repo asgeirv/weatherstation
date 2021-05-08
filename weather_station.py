@@ -77,7 +77,7 @@ def draw_weather(weather_data):
         item += 1
 
     # Draw separator
-    draw.line((10, 240, epd5in65f.EPD_WIDTH - 10, 240), fill=0)
+    draw.line((10, 220, epd5in65f.EPD_WIDTH - 10, 220), fill=0)
 
     # Credits
     draw.text((15, 240), yr_credits[0], font=font_small, fill=0)
@@ -101,7 +101,7 @@ def draw_future_weather(weather_data, image, pos):  # pos starts at 0
     future_temperature_y = 175
 
     # x positions all have the same offset
-    x_offset = 110
+    x_offset = 115
 
     # Draw weather
     future_x = 15 + x_offset * pos
