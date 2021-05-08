@@ -110,10 +110,10 @@ def draw_future_weather(weather_data, image, pos):  # pos starts at 0
     icon1 = Image.open("icons/small/%s.bmp" % (weather_data["icon"]))
     image.paste(icon1, (future_x, future_y))
     # Time
-    draw.text((future_x + 60, future_y), weather_data["time"], font=font_small, fill=0)
+    draw.text((future_x + 55, future_y), weather_data["time"], font=font_small, fill=0)
     # Temperature
     temperature_text = u"%.1f° C" % (weather_data["temperature"])
-    draw.text((future_x + 60, future_temperature_y), temperature_text.replace(".", ","), font=font_smallest,
+    draw.text((future_x + 55, future_temperature_y), temperature_text.replace(".", ","), font=font_smallest,
               fill=0)
 
 
