@@ -76,12 +76,12 @@ def draw_weather(weather_data):
         draw.text((wind_x, wind_y + y_offset * 3), "%.1f prosent %.0f-%.0f mm" % (weather_now["precipitation_probability"], weather_now["precipitation_min"], max_precipitation), font=font_small, fill=0)
 
     # Draw separator
-    draw.line((10, 150, epd5in65f.EPD_WIDTH - 10, 120), fill=0)
+    draw.line((10, 150, epd5in65f.EPD_WIDTH - 10, 150), fill=0)
 
     # Draw future weather
     item = 0
     while item < len(weather_future):
-        draw_future_weather(weather_future[item], image, item, 150)
+        draw_future_weather(weather_future[item], image, item, 170)
         item += 1
 
     # Draw separator
@@ -120,8 +120,13 @@ def draw_future_weather(weather_data, image, pos, y_pos):  # pos starts at 0
     draw.text((future_x, future_y), weather_data["time"], font=font_small, fill=0)
     # Temperature
     temperature_text = u"%.1f° C" % (weather_data["temperature"])
-    draw.text((future_x + 55, future_temperature_y), temperature_text.replace(".", ","), font=font_smallest,
-              fill=0)
+    draw.text((future_x + 55, future_temperature_y), temperature_text.replace(".", ","), font=font_smallest, fill=0)
+    # Precipitation
+    max_precipitation = weather_data["precipitation_max"]
+    if max_precipitation > 0:
+        draw.text((future_x + 55, future_temperature_y + 20), "%.1f prosent\n%.0f-%.0f mm" % (
+            weather_data["precipitation_probability"], weather_data["precipitation_min"], max_precipitation),
+                  font=font_small, fill=0)
 
 
 def draw_error(err_msg):
