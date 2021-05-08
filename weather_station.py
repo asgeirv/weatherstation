@@ -76,12 +76,12 @@ def draw_weather(weather_data):
         draw.text((wind_x, wind_y + y_offset * 3), "%.1f prosent %.0f-%.0f mm" % (weather_now["precipitation_probability"], weather_now["precipitation_min"], max_precipitation), font=font_small, fill=0)
 
     # Draw separator
-    draw.line((10, 150, epd5in65f.EPD_WIDTH - 10, 150), fill=0)
+    draw.line((10, 130, epd5in65f.EPD_WIDTH - 10, 130), fill=0)
 
     # Draw future weather
     item = 0
     while item < len(weather_future):
-        draw_future_weather(weather_future[item], image, item, 170)
+        draw_future_weather(weather_future[item], image, item, 145)
         item += 1
 
     # Draw separator
@@ -105,7 +105,7 @@ def draw_future_weather(weather_data, image, pos, y_pos):  # pos starts at 0
 
     # y positions for future weather are all the same
     future_y = y_pos
-    future_temperature_y = y_pos + 20
+    future_temperature_y = y_pos + 25
 
     # x positions all have the same offset
     x_offset = 115
