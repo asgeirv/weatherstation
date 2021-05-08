@@ -11,8 +11,8 @@ import include.yr as yr
 import include.logger as logger
 import socket
 
-font_smallest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 16)
-font_small = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 20)
+font_smallest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 14)
+font_small = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 28)
 font_med = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 28)
 font_big = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 36)
 font_biggest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 56)
@@ -101,7 +101,7 @@ def draw_future_weather(weather_data, image, pos):  # pos starts at 0
     future_temperature_y = 175
 
     # x positions all have the same offset
-    x_offset = 120
+    x_offset = 110
 
     # Draw weather
     future_x = 15 + x_offset * pos
