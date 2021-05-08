@@ -25,8 +25,8 @@ def print_weather():
         logger.log("Creating weather report")
         draw_weather(weather_data)
 
-    except:
-        draw_error("Se /var/log/weatherstation_log.txt\nIP: " + get_host_ip())
+    except Exception as e:
+        draw_error("%s\nIP: %s" % (e, get_host_ip()))
 
 
 def draw_weather(weather_data):
@@ -145,8 +145,8 @@ def draw_error(err_msg):
     # Initialize image
     image = Image.new("1", (epd5in65f.EPD_WIDTH, epd5in65f.EPD_HEIGHT), 255)
     draw = ImageDraw.Draw(image)
-    draw.text((10, 100), "Noe gikk galt :(", font=font_biggest, fill=0)
-    draw.text((10, 190), err_msg, font=font_med, fill=0)
+    draw.text((10, 10), "Noe gikk galt :(", font=font_biggest, fill=0)
+    draw.text((10, 100), err_msg, font=font_med, fill=0)
 
     # Draw error message
     epd.display(epd.getbuffer(image))
