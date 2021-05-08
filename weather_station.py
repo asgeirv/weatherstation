@@ -146,7 +146,7 @@ def draw_error(err_msg):
     image = Image.new("1", (epd5in65f.EPD_WIDTH, epd5in65f.EPD_HEIGHT), 255)
     draw = ImageDraw.Draw(image)
     draw.text((10, 10), "Noe gikk galt :(", font=font_biggest, fill=0)
-    draw.text((10, 100), err_msg, font=font_med, fill=0)
+    draw.text((10, 100), err_msg, font=font_small, fill=0)
 
     # Draw error message
     epd.display(epd.getbuffer(image))
