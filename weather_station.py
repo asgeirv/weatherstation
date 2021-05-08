@@ -53,7 +53,7 @@ def draw_weather(weather_data):
     # Draw current weather
     # Weather icon
     icon = Image.open("icons/%s.bmp" % (weather_now["icon"]))
-    image.paste(icon, (10, 30))
+    image.paste(icon, (10, 20))
     # Text box positions are relative to one another
     # Temperature
     temperature_x = 130
@@ -70,6 +70,10 @@ def draw_weather(weather_data):
     draw.text((wind_x, wind_y + y_offset), wind_gust_text.replace(".", ","), font=font_small, fill=0)
     # Pressure
     draw.text((wind_x, wind_y + y_offset * 2), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
+    # Precipitation
+    probability = weather_now["precipitation_probability"]
+    if probability > 0:
+        draw.text((wind_x, wind_y + y_offset * 3), "%.1f\% %.0f-%.0f mm" % (probability, weather_now["precipitation_min"], weather_now["precipitation_max"]), font=font_small, fill=0)
 
     # Draw separator
     draw.line((10, 150, epd5in65f.EPD_WIDTH - 10, 150), fill=0)

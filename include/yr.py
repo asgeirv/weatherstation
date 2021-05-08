@@ -83,6 +83,9 @@ def extract_weather_data(data):
     return {
         "time": str(time.hour).zfill(2) + ":00",
         "icon": data["data"]["next_1_hours"]["summary"]["symbol_code"],
+        "precipitation_min": data["data"]["next_1_hours"]["details"]["precipitation_amount_min"],
+        "precipitation_max": data["data"]["next_1_hours"]["details"]["precipitation_amount_max"],
+        "precipitation_probability": data["data"]["next_1_hours"]["details"]["probability_of_precipitation"],
         "wind_speed": data["data"]["instant"]["details"]["wind_speed"],
         "wind_speed_of_gust": data["data"]["instant"]["details"]["wind_speed_of_gust"],
         "wind_direction": get_wind_direction(data["data"]["instant"]["details"]["wind_from_direction"]),
