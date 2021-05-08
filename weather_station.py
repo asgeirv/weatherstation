@@ -71,7 +71,7 @@ def draw_weather(weather_data):
     # Pressure
     draw.text((wind_x, wind_y + y_offset * 2), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
     # Cloud cover
-    cloud_text = "%.1f%s skyet" % (weather_now["cloud_cover"], "%")
+    cloud_text = "%.1f%s skydekke" % (weather_now["cloud_cover"], "%")
     draw.text((wind_x, wind_y + y_offset * 3), cloud_text.replace(".", ","),
               font=font_small, fill=0)
     # Precipitation
