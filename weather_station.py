@@ -76,12 +76,12 @@ def draw_weather(weather_data):
         draw.text((wind_x, wind_y + y_offset * 3), "%.1f prosent %.0f-%.0f mm" % (weather_now["precipitation_probability"], weather_now["precipitation_min"], max_precipitation), font=font_small, fill=0)
 
     # Draw separator
-    draw.line((10, 150, epd5in65f.EPD_WIDTH - 10, 150), fill=0)
+    draw.line((10, 150, epd5in65f.EPD_WIDTH - 10, 120), fill=0)
 
     # Draw future weather
     item = 0
     while item < len(weather_future):
-        draw_future_weather(weather_future[item], image, item, 170)
+        draw_future_weather(weather_future[item], image, item, 150)
         item += 1
 
     # Draw separator
@@ -115,9 +115,9 @@ def draw_future_weather(weather_data, image, pos, y_pos):  # pos starts at 0
 
     # Weather icon
     icon1 = Image.open("icons/small/%s.bmp" % (weather_data["icon"]))
-    image.paste(icon1, (future_x, future_y))
+    image.paste(icon1, (future_x, future_temperature_y))
     # Time
-    draw.text((future_x + 55, future_y), weather_data["time"], font=font_small, fill=0)
+    draw.text((future_x, future_y), weather_data["time"], font=font_small, fill=0)
     # Temperature
     temperature_text = u"%.1f° C" % (weather_data["temperature"])
     draw.text((future_x + 55, future_temperature_y), temperature_text.replace(".", ","), font=font_smallest,
