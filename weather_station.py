@@ -12,7 +12,7 @@ import include.logger as logger
 import socket
 
 font_smallest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 14)
-font_small = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 28)
+font_small = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 18)
 font_med = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 28)
 font_big = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 36)
 font_biggest = ImageFont.truetype("/usr/share/fonts/truetype/lato/Lato-Regular.ttf", 56)
