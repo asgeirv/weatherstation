@@ -66,8 +66,8 @@ def draw_weather(weather_data):
     y_offset = 20
     wind_text = "%.1f m/s %s" % (weather_now["wind_speed"], weather_now["wind_direction"])
     draw.text((wind_x, wind_y), wind_text.replace(".", ","), font=font_small, fill=0)
-    wind_gust_text = "%.1f m/s" % weather_now["wind_speed_of_gust"]
-    draw.text((wind_x, wind_y + y_offset), "%.1f m/s vindkast" % wind_gust_text.replace(".", ","), font=font_small, fill=0)
+    wind_gust_text = "%.1f m/s vindkast" % weather_now["wind_speed_of_gust"]
+    draw.text((wind_x, wind_y + y_offset), wind_gust_text.replace(".", ","), font=font_small, fill=0)
     # Pressure
     draw.text((wind_x, wind_y + y_offset * 2), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
 
