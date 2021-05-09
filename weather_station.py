@@ -82,7 +82,7 @@ def draw_weather(weather_data):
                   font=font_small, fill=0)
 
     # Draw separator
-    draw.line((10, 130, epd5in65f.EPD_WIDTH - 10, 130), fill=0)
+    draw.line((10, 135, epd5in65f.EPD_WIDTH - 10, 135), fill=0)
 
     # Draw future weather
     item = 0
@@ -131,9 +131,9 @@ def draw_future_weather(weather_data, image, pos, y_pos):  # pos starts at 0
     # Precipitation
     max_precipitation = weather_data["precipitation_max"]
     if max_precipitation > 0:
-        draw.text((future_x + 55, future_temperature_y + 20), "%.0f%s %.0f-%.0f mm" % (
+        draw.text((future_x + 60, future_temperature_y + 20), "%.0f%s\n%.0f-%.0f mm" % (
             weather_data["precipitation_probability"], "%", weather_data["precipitation_min"], max_precipitation),
-                  font=font_small, fill=0)
+                  font=font_smallest, fill=0)
 
 
 def draw_error(err_msg):
