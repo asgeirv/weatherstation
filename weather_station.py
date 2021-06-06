@@ -52,7 +52,7 @@ def draw_weather(weather_data):
 
     # Draw weather in location 1
     (min_prec1, max_prec1) = calculate_precipitation(weather_future1)
-    draw.text((10, 5), u"%s (nedbør: %.0f-%.0f)" % (weather_data["loc2"], min_prec1, max_prec1), font=font_small, fill=0)
+    draw.text((10, 5), u"%s (nedbør: %.0f-%.0f mm)" % (weather_data["loc2"], min_prec1, max_prec1), font=font_small, fill=0)
     future1_item = 0
     while future1_item < len(weather_future1):
         draw_future_weather(weather_future1[future1_item], image, future1_item, 30)
@@ -63,7 +63,7 @@ def draw_weather(weather_data):
 
     # Draw weather in location 2
     (min_prec2, max_prec2) = calculate_precipitation(weather_future2)
-    draw.text((10, 125), u"%s (nedbør: %.0f-%.0f)" % (weather_data["loc2"], min_prec2, max_prec2), font=font_small, fill=0)
+    draw.text((10, 125), u"%s (nedbør: %.0f-%.0f mm)" % (weather_data["loc2"], min_prec2, max_prec2), font=font_small, fill=0)
     future2_item = 0
     while future2_item < len(weather_future2):
         draw_future_weather(weather_future2[0], image, future2_item, 145)
@@ -116,8 +116,10 @@ def calculate_precipitation(weather_data):
 
     prec_item = 0
     while prec_item < len(weather_data):
-        min_prec = min_prec + float(weather_data["precipitation_min"])
-        max_prec = max_prec + float(weather_data["precipitation_max"])
+        min_p = weather_data["precipitation_min"]
+        max_p = weather_data["precipitation_max"]
+        min_prec = min_prec + min_p
+        max_prec = max_prec + max_p
 
     return min_prec, max_prec
 
