@@ -53,13 +53,13 @@ def draw_weather(weather_data):
     # Draw weather in location 1
     future_item = 0
     while future_item < len(weather_future1):
-        draw_future_weather(weather_future1[future_item], image, future_item)
+        draw_future_weather(weather_future1[future_item], image, future_item, 10)
         future_item += 1
 
     # Draw separator
     draw.line((10, 135, 390, 135), fill=0)
 
-    # Draw remote weather
+    # Draw weather in location 2
 
     # Draw separator
     draw.line((10, 235, 390, 235), fill=0)
@@ -78,13 +78,13 @@ def draw_weather(weather_data):
     epd.sleep()
 
 
-def draw_future_weather(weather_data, image, pos):  # pos starts at 0
+def draw_future_weather(weather_data, image, pos, y):  # pos starts at 0
     draw = ImageDraw.Draw(image)
 
     # y positions for future weather are all the same
-    future_time_y = 145
-    future_icon_y = 165
-    future_temperature_y = 215
+    future_time_y = y
+    future_icon_y = y + 20
+    future_temperature_y = y + 70
 
     # x positions all have the same offset
     x_offset = 80
