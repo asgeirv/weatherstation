@@ -28,7 +28,7 @@ def get_weather_data(config=None):
     logger.log("Getting weather data from " + url)
 
     # Set header
-    headers = {"User-Agent": "AEV Weather Station"}
+    headers = {"User-Agent": "RAV Weather Station"}
     response = requests.get(url, headers=headers)
     data = response.content.decode("utf-8")
     write_weather_data(data)
