@@ -16,10 +16,11 @@ def read_config():
         "name1": config_parser.get("loc1", "name"),
         "lat1": config_parser.get("loc1", "lat"),
         "long1": config_parser.get("loc1", "long"),
+        "interval1": config_parser.get("loc1", "interval"),
         "name2": config_parser.get("loc2", "name"),
         "lat2": config_parser.get("loc2", "lat"),
         "long2": config_parser.get("loc2", "long"),
-        "future_interval": config_parser.get("future", "interval")
+        "interval2": config_parser.get("loc2", "interval")
     }
 
 
@@ -61,7 +62,8 @@ def get_forecast():
     (weather_json1, weather_json2) = get_weather_data(config)
 
     first_future_time = 0
-    future_interval = int(config["future_interval"])
+    interval1 = int(config["interval1"])
+    interval2 = int(config["interval2"])
 
     # Get forecasts
     data1 = json.loads(weather_json1)
@@ -73,17 +75,17 @@ def get_forecast():
     # Get forecasts
     weather1_data_now = data1["properties"]["timeseries"][0]
     weather1_data_future1 = data1["properties"]["timeseries"][first_future_time]
-    weather1_data_future2 = data1["properties"]["timeseries"][first_future_time + future_interval]
-    weather1_data_future3 = data1["properties"]["timeseries"][first_future_time + (future_interval * 2)]
-    weather1_data_future4 = data1["properties"]["timeseries"][first_future_time + (future_interval * 3)]
-    weather1_data_future5 = data1["properties"]["timeseries"][first_future_time + (future_interval * 4)]
+    weather1_data_future2 = data1["properties"]["timeseries"][first_future_time + interval1]
+    weather1_data_future3 = data1["properties"]["timeseries"][first_future_time + (interval1 * 2)]
+    weather1_data_future4 = data1["properties"]["timeseries"][first_future_time + (interval1 * 3)]
+    weather1_data_future5 = data1["properties"]["timeseries"][first_future_time + (interval1 * 4)]
 
     weather2_data_now = data2["properties"]["timeseries"][0]
     weather2_data_future1 = data2["properties"]["timeseries"][first_future_time]
-    weather2_data_future2 = data2["properties"]["timeseries"][first_future_time + future_interval]
-    weather2_data_future3 = data2["properties"]["timeseries"][first_future_time + (future_interval * 2)]
-    weather2_data_future4 = data2["properties"]["timeseries"][first_future_time + (future_interval * 3)]
-    weather2_data_future5 = data2["properties"]["timeseries"][first_future_time + (future_interval * 4)]
+    weather2_data_future2 = data2["properties"]["timeseries"][first_future_time + interval2]
+    weather2_data_future3 = data2["properties"]["timeseries"][first_future_time + (interval2 * 2)]
+    weather2_data_future4 = data2["properties"]["timeseries"][first_future_time + (interval2 * 3)]
+    weather2_data_future5 = data2["properties"]["timeseries"][first_future_time + (interval2 * 4)]
 
     return {
         "weather_now": extract_weather_data(weather1_data_now),
