@@ -51,7 +51,8 @@ def draw_weather(weather_data):
     draw = ImageDraw.Draw(image)
 
     # Draw weather in location 1
-    draw.text((10, 5), "%s:" % weather_data["loc1"], font=font_small, fill=0)
+    (min_prec1, max_prec1) = calculate_precipitation(weather_future1)
+    draw.text((10, 5), u"%s (nedbør: %.0f-%.0f)" % (weather_data["loc2"], min_prec1, max_prec1), font=font_small, fill=0)
     future1_item = 0
     while future1_item < len(weather_future1):
         draw_future_weather(weather_future1[future1_item], image, future1_item, 30)
@@ -61,7 +62,8 @@ def draw_weather(weather_data):
     draw.line((10, 120, 390, 120), fill=0)
 
     # Draw weather in location 2
-    draw.text((10, 125), "%s:" % weather_data["loc2"], font=font_small, fill=0)
+    (min_prec2, max_prec2) = calculate_precipitation(weather_future2)
+    draw.text((10, 125), u"%s (nedbør: %.0f-%.0f)" % (weather_data["loc2"], min_prec2, max_prec2), font=font_small, fill=0)
     future2_item = 0
     while future2_item < len(weather_future2):
         draw_future_weather(weather_future2[0], image, future2_item, 145)
@@ -106,6 +108,18 @@ def draw_future_weather(weather_data, image, pos, y):  # pos starts at 0
     temperature_text = u"%.1f° C" % (weather_data["temperature"])
     draw.text((future_x + 5, future_temperature_y), temperature_text.replace(".", ","), font=font_smallest,
               fill=0)
+
+
+def calculate_precipitation(weather_data):
+    min_prec = 0.0
+    max_prec = 0.0
+
+    prec_item = 0
+    while prec_item < len(weather_data):
+        min_prec = min_prec + weather_data["precipitation_min"]
+        max_prec = max_prec + weather_data["precipitation_max"]
+
+    return min_prec, max_prec
 
 
 def draw_error(err_msg):
