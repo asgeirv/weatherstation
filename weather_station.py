@@ -51,7 +51,7 @@ def draw_weather(weather_data):
     draw = ImageDraw.Draw(image)
 
     # Draw weather in location 1
-    draw.text((15, 10), weather_data["loc1"], font=font_small, fill=0)
+    draw.text((10, 10), weather_data["loc1"], font=font_small, fill=0)
     future1_item = 0
     while future1_item < len(weather_future1):
         draw_future_weather(weather_future1[future1_item], image, future1_item, 30)
@@ -61,7 +61,7 @@ def draw_weather(weather_data):
     draw.line((10, 120, 390, 120), fill=0)
 
     # Draw weather in location 2
-    draw.text((15, 130), weather_data["loc2"], font=font_small, fill=0)
+    draw.text((10, 130), weather_data["loc2"], font=font_small, fill=0)
     future2_item = 0
     while future2_item < len(weather_future2):
         draw_future_weather(weather_future2[0], image, future2_item, 140)

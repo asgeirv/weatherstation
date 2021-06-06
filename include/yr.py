@@ -16,7 +16,7 @@ def read_config():
         "name1": config_parser.get("loc1", "name"),
         "lat1": config_parser.get("loc1", "lat"),
         "long1": config_parser.get("loc1", "long"),
-        "name2": config_parser.get("loc1", "name"),
+        "name2": config_parser.get("loc2", "name"),
         "lat2": config_parser.get("loc2", "lat"),
         "long2": config_parser.get("loc2", "long"),
         "future_interval": config_parser.get("future", "interval")
