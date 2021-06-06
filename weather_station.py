@@ -116,8 +116,8 @@ def calculate_precipitation(weather_data):
 
     prec_item = 0
     while prec_item < len(weather_data):
-        min_prec = min_prec + weather_data["precipitation_min"]
-        max_prec = max_prec + weather_data["precipitation_max"]
+        min_prec = min_prec + float(weather_data["precipitation_min"])
+        max_prec = max_prec + float(weather_data["precipitation_max"])
 
     return min_prec, max_prec
 
