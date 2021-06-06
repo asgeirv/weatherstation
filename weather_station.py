@@ -6,7 +6,7 @@ import time
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 import traceback
-import include.epd5in65f as epd4in2
+import include.epd4in2 as epd4in2
 import include.yr as yr
 import include.logger as logger
 import socket
@@ -42,7 +42,7 @@ def draw_weather(weather_data):
     logger.log("Initializing E-ink screen...")
     epd = epd4in2.EPD()
     epd.init()
-    epd.Clear()
+    epd.Clear(0xFF)
 
     # Initialize image
     logger.log("Initializing weather report...")
@@ -129,7 +129,7 @@ def draw_error(err_msg):
 
     epd = epd4in2.EPD()
     epd.init()
-    epd.Clear()
+    epd.Clear(0xFF)
 
     # Initialize image
     image = Image.new("1", (epd4in2.EPD_WIDTH, epd4in2.EPD_HEIGHT), 255)
