@@ -32,8 +32,8 @@ def print_weather():
 def draw_weather(weather_data):
     # Get weather
     logger.log("Reading weather data...")
-    weather_now = weather_data["weather_now"]
-    weather_future = weather_data["weather_future"]
+    weather_future1 = weather_data["weather_future1"]
+    weather_future2 = weather_data["weather_future2"]
 
     # Get credits
     yr_credits = yr.get_credits()
@@ -50,31 +50,16 @@ def draw_weather(weather_data):
 
     draw = ImageDraw.Draw(image)
 
-    # Draw current weather
-    # Weather icon
-    icon = Image.open("icons/%s.bmp" % (weather_now["icon"]))
-    image.paste(icon, (10, 10))
-    # Text box positions are related to one another
-    # Temperature
-    temperature_x = 130
-    temperature_y = 15
-    temperature_text = u"%.1f° C" % (weather_now["temperature"])
-    draw.text((temperature_x, temperature_y), temperature_text.replace(".", ","), font=font_biggest, fill=0)
-    # Wind
-    wind_y = temperature_y + 60
-    wind_text = "%.1f m/s %s" % (weather_now["wind_speed"], weather_now["wind_direction"])
-    draw.text((temperature_x + 5, wind_y), wind_text.replace(".", ","), font=font_med, fill=0)
-    # Pressure
-    draw.text((temperature_x + 5, wind_y + 30), "%.0f hPa" % (weather_now["pressure"]), font=font_small, fill=0)
+    # Draw weather in location 1
+    future_item = 0
+    while future_item < len(weather_future1):
+        draw_future_weather(weather_future1[future_item], image, future_item)
+        future_item += 1
 
     # Draw separator
     draw.line((10, 135, 390, 135), fill=0)
 
-    # Draw future weather
-    item = 0
-    while item < len(weather_future):
-        draw_future_weather(weather_future[item], image, item)
-        item += 1
+    # Draw remote weather
 
     # Draw separator
     draw.line((10, 235, 390, 235), fill=0)

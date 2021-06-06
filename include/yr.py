@@ -13,8 +13,10 @@ def read_config():
     config_parser.read_file(open(r'weather.conf'))
 
     return {
-        "lat": config_parser.get("loc", "lat"),
-        "long": config_parser.get("loc", "long"),
+        "lat1": config_parser.get("loc1", "lat"),
+        "long1": config_parser.get("loc1", "long"),
+        "lat2": config_parser.get("loc2", "lat"),
+        "long2": config_parser.get("loc2", "long"),
         "future_interval": config_parser.get("future", "interval")
     }
 
@@ -23,17 +25,25 @@ def get_weather_data(config=None):
     print("Getting weather data from yr.no...")
     if config is None:
         config = read_config()
-    url = ("https://api.met.no/weatherapi/locationforecast/2.0/complete.json?lat=%s&lon=%s"
-           % (config["lat"], config["long"]))
-    logger.log("Getting weather data from " + url)
+    url1 = ("https://api.met.no/weatherapi/locationforecast/2.0/complete.json?lat=%s&lon=%s"
+            % (config["lat1"], config["long1"]))
+    url2 = ("https://api.met.no/weatherapi/locationforecast/2.0/complete.json?lat=%s&lon=%s"
+            % (config["lat2"], config["long2"]))
 
     # Set header
     headers = {"User-Agent": "RAV Weather Station"}
-    response = requests.get(url, headers=headers)
-    data = response.content.decode("utf-8")
-    write_weather_data(data)
 
-    return data
+    logger.log("Getting weather data from " + url1)
+    response1 = requests.get(url1, headers=headers)
+    data1 = response1.content.decode("utf-8")
+    write_weather_data(data1)
+
+    logger.log("Getting weather data from " + url2)
+    response2 = requests.get(url2, headers=headers)
+    data2 = response2.content.decode("utf-8")
+    write_weather_data(data2)
+
+    return data1, data2
 
 
 def write_weather_data(weather_data):
@@ -46,33 +56,48 @@ def write_weather_data(weather_data):
 
 def get_forecast():
     config = read_config()
-    weather_json = get_weather_data(config)
+    (weather_json1, weather_json2) = get_weather_data(config)
 
-    first_future_time = 6
+    first_future_time = 0
     future_interval = int(config["future_interval"])
 
     # Get forecasts
-    data = json.loads(weather_json)
+    data1 = json.loads(weather_json1)
+    data2 = json.loads(weather_json2)
 
     # Get last update
-    last_update = data["properties"]["meta"]["updated_at"]
+    last_update = data1["properties"]["meta"]["updated_at"]
 
     # Get forecasts
-    weather_data_now = data["properties"]["timeseries"][0]
-    weather_data_future1 = data["properties"]["timeseries"][first_future_time]
-    weather_data_future2 = data["properties"]["timeseries"][first_future_time + future_interval]
-    weather_data_future3 = data["properties"]["timeseries"][first_future_time + (future_interval * 2)]
-    weather_data_future4 = data["properties"]["timeseries"][first_future_time + (future_interval * 3)]
-    weather_data_future5 = data["properties"]["timeseries"][first_future_time + (future_interval * 4)]
+    weather1_data_now = data1["properties"]["timeseries"][0]
+    weather1_data_future1 = data1["properties"]["timeseries"][first_future_time]
+    weather1_data_future2 = data1["properties"]["timeseries"][first_future_time + future_interval]
+    weather1_data_future3 = data1["properties"]["timeseries"][first_future_time + (future_interval * 2)]
+    weather1_data_future4 = data1["properties"]["timeseries"][first_future_time + (future_interval * 3)]
+    weather1_data_future5 = data1["properties"]["timeseries"][first_future_time + (future_interval * 4)]
+
+    weather2_data_now = data2["properties"]["timeseries"][0]
+    weather2_data_future1 = data2["properties"]["timeseries"][first_future_time]
+    weather2_data_future2 = data2["properties"]["timeseries"][first_future_time + future_interval]
+    weather2_data_future3 = data2["properties"]["timeseries"][first_future_time + (future_interval * 2)]
+    weather2_data_future4 = data2["properties"]["timeseries"][first_future_time + (future_interval * 3)]
+    weather2_data_future5 = data2["properties"]["timeseries"][first_future_time + (future_interval * 4)]
 
     return {
-        "weather_now": extract_weather_data(weather_data_now),
-        "weather_future": [
-            extract_weather_data(weather_data_future1),
-            extract_weather_data(weather_data_future2),
-            extract_weather_data(weather_data_future3),
-            extract_weather_data(weather_data_future4),
-            extract_weather_data(weather_data_future5)
+        "weather_now": extract_weather_data(weather1_data_now),
+        "weather_future1": [
+            extract_weather_data(weather1_data_future1),
+            extract_weather_data(weather1_data_future2),
+            extract_weather_data(weather1_data_future3),
+            extract_weather_data(weather1_data_future4),
+            extract_weather_data(weather1_data_future5)
+        ],
+        "weather_future2": [
+            extract_weather_data(weather2_data_future1),
+            extract_weather_data(weather2_data_future2),
+            extract_weather_data(weather2_data_future3),
+            extract_weather_data(weather2_data_future4),
+            extract_weather_data(weather2_data_future5)
         ],
         "last_update": last_update
     }
