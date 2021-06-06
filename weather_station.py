@@ -66,7 +66,7 @@ def draw_weather(weather_data):
     draw.text((10, 125), u"%s (nedbør: %.0f-%.0f mm)" % (weather_data["loc2"], min_prec2, max_prec2), font=font_small, fill=0)
     future2_item = 0
     while future2_item < len(weather_future2):
-        draw_future_weather(weather_future2[0], image, future2_item, 145)
+        draw_future_weather(weather_future2[future2_item], image, future2_item, 145)
         future2_item += 1
 
     # Draw separator
@@ -116,10 +116,10 @@ def calculate_precipitation(weather_data):
 
     prec_item = 0
     while prec_item < len(weather_data):
-        min_p = weather_data["precipitation_min"]
-        max_p = weather_data["precipitation_max"]
-        min_prec = min_prec + min_p
-        max_prec = max_prec + max_p
+        min_prec += weather_data[prec_item]["precipitation_min"]
+        max_prec += weather_data[prec_item]["precipitation_max"]
+
+        prec_item += 1
 
     return min_prec, max_prec
 
