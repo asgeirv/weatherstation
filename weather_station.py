@@ -51,15 +51,19 @@ def draw_weather(weather_data):
     draw = ImageDraw.Draw(image)
 
     # Draw weather in location 1
-    future_item = 0
-    while future_item < len(weather_future1):
-        draw_future_weather(weather_future1[future_item], image, future_item, 10)
-        future_item += 1
+    future1_item = 0
+    while future1_item < len(weather_future1):
+        draw_future_weather(weather_future1[future1_item], image, future1_item, 10)
+        future1_item += 1
 
     # Draw separator
     draw.line((10, 135, 390, 135), fill=0)
 
     # Draw weather in location 2
+    future2_item = 0
+    while future2_item < len(weather_future2):
+        draw_future_weather(weather_future2[0], image, future2_item, 100)
+        future2_item += 1
 
     # Draw separator
     draw.line((10, 235, 390, 235), fill=0)
