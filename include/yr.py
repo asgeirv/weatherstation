@@ -13,8 +13,10 @@ def read_config():
     config_parser.read_file(open(r'weather.conf'))
 
     return {
+        "name1": config_parser.get("loc1", "name"),
         "lat1": config_parser.get("loc1", "lat"),
         "long1": config_parser.get("loc1", "long"),
+        "name2": config_parser.get("loc1", "name"),
         "lat2": config_parser.get("loc2", "lat"),
         "long2": config_parser.get("loc2", "long"),
         "future_interval": config_parser.get("future", "interval")
@@ -85,6 +87,7 @@ def get_forecast():
 
     return {
         "weather_now": extract_weather_data(weather1_data_now),
+        "loc1": config["name1"],
         "weather_future1": [
             extract_weather_data(weather1_data_future1),
             extract_weather_data(weather1_data_future2),
@@ -92,6 +95,7 @@ def get_forecast():
             extract_weather_data(weather1_data_future4),
             extract_weather_data(weather1_data_future5)
         ],
+        "loc2": config["name2"],
         "weather_future2": [
             extract_weather_data(weather2_data_future1),
             extract_weather_data(weather2_data_future2),
